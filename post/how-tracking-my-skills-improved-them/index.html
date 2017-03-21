@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="referrer" content="no-referrer">
+    <base href="http://blog.mattrbianchi.com/">
+    
+
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400|Old+Standard+TT:400' rel='stylesheet' type='text/css'>
+
+    <link rel="icon" type="image/png" href="/favicon_16x16.png" sizes="16x16">
+    <link rel="icon" type="image/png" href="/favicon_32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="/favicon_128x128.png" sizes="128x128">
+
+    <title>
+      
+      
+         How Tracking My Skills Improved Them 
+      
+    </title>
+    <link rel="canonical" href="http://blog.mattrbianchi.com/post/how-tracking-my-skills-improved-them/">
+
+    <style>
+  * {
+    border:0;
+    font:inherit;
+    font-size:100%;
+    vertical-align:baseline;
+    margin:0;
+    padding:0;
+    color: black;
+  }
+
+  body {
+    font-family:'Open Sans', 'Myriad Pro', Myriad, sans-serif;
+    font-size:17px;
+    line-height:160%;
+    color:#1d1313;
+    max-width:700px;
+    margin:auto;
+  }
+
+  p {
+    margin: 20px 0;
+  }
+
+  a img {
+    border:none;
+  }
+
+  img {
+    margin: 10px auto 10px auto;
+    max-width: 100%;
+    display: block;
+  }
+
+  pre, code {
+    font: 12px Consolas, "Liberation Mono", Menlo, Courier, monospace;
+    background-color: #f7f7f7;
+  }
+
+  code {
+    font-size: 12px;
+    padding: 4px;
+  }
+
+  pre {
+    margin-top: 0;
+    margin-bottom: 16px;
+    word-wrap: normal;
+    padding: 16px;
+    overflow: auto;
+    font-size: 85%;
+    line-height: 1.45;
+  }
+
+  pre>code {
+    padding: 0;
+    margin: 0;
+    font-size: 100%;
+    word-break: normal;
+    white-space: pre;
+    background: transparent;
+    border: 0;
+  }
+
+  pre code {
+    display: inline;
+    max-width: auto;
+    padding: 0;
+    margin: 0;
+    overflow: visible;
+    line-height: inherit;
+    word-wrap: normal;
+    background-color: transparent;
+    border: 0;
+  }
+
+  pre code::before,
+  pre code::after {
+    content: normal;
+  }
+
+  em,q,em,dfn {
+    font-style:italic;
+  }
+
+  .sans,html .gist .gist-file .gist-meta {
+    font-family:"Open Sans","Myriad Pro",Myriad,sans-serif;
+  }
+
+  .mono,pre,code,tt,p code,li code {
+    font-family:Menlo,Monaco,"Andale Mono","lucida console","Courier New",monospace;
+  }
+
+  .heading,.serif,h1,h2,h3 {
+    font-family:"Old Standard TT",serif;
+  }
+
+  strong {
+    font-weight:600;
+  }
+
+  q:before {
+    content:"\201C";
+  }
+
+  q:after {
+    content:"\201D";
+  }
+
+  del,s {
+    text-decoration:line-through;
+  }
+
+  blockquote {
+    font-family:"Old Standard TT",serif;
+    text-align:center;
+    padding:50px;
+  }
+
+  blockquote p {
+    display:inline-block;
+    font-style:italic;
+  }
+
+  blockquote:before,blockquote:after {
+    font-family:"Old Standard TT",serif;
+    content:'\201C';
+    font-size:35px;
+    color:#403c3b;
+  }
+
+  blockquote:after {
+    content:'\201D';
+  }
+
+  hr {
+    width:40%;
+    height: 1px;
+    background:#403c3b;
+    margin: 25px auto;
+  }
+
+  h1 {
+    font-size:35px;
+  }
+
+  h2 {
+    font-size:28px;
+  }
+
+  h3 {
+    font-size:22px;
+    margin-top:18px;
+  }
+
+  h1 a,h2 a,h3 a {
+    text-decoration:none;
+  }
+
+  h1,h2 {
+    margin-top:28px;
+  }
+
+  #sub-header, time {
+    color:#403c3b;
+    font-size:13px;
+  }
+
+  #sub-header {
+    margin: 0 4px;
+  }
+
+  #nav h1 a {
+    font-size:35px;
+    color:#1d1313;
+    line-height:120%;
+  }
+
+  .posts_listing a,#nav a {
+    text-decoration: none;
+  }
+
+  .foot h1 a {
+    color:#1d1313;
+    line-height:120%;
+  }
+
+  .foot a {
+    text-decoration: none;
+  }
+
+  li {
+    margin-left: 20px;
+  }
+
+  ul li {
+    margin-left: 5px;
+  }
+
+  ul li {
+    list-style-type: none;
+  }
+  ul li:before {
+    content:"\00BB \0020";
+  }
+
+  #nav ul li:before, .posts_listing li:before {
+    content:'';
+    margin-right:0;
+  }
+
+  .foot ul li:before {
+    content:'';
+    margin-right:0;
+  }
+
+  #content {
+    text-align:left;
+    width:100%;
+    font-size:15px;
+    padding:60px 0 80px;
+  }
+
+  #content h1,#content h2 {
+    margin-bottom:5px;
+  }
+
+  #content h2 {
+    font-size:25px;
+  }
+
+  #content .entry-content {
+    margin-top:15px;
+  }
+
+  #content time {
+    margin-left:3px;
+  }
+
+  #content h1 {
+    font-size:30px;
+  }
+
+  .highlight {
+    margin: 10px 0;
+  }
+
+  .posts_listing {
+    margin:0 0 50px;
+  }
+
+  .posts_listing li {
+    margin:0 0 25px 15px;
+  }
+
+  .posts_listing li a:hover,#nav a:hover {
+    text-decoration: underline;
+  }
+
+  #nav {
+    text-align:center;
+    position:static;
+    margin-top:60px;
+  }
+
+  #nav ul {
+    display: table;
+    margin: 8px auto 0 auto;
+  }
+
+  #nav li {
+    list-style-type:none;
+    display:table-cell;
+    font-size:15px;
+    padding: 0 20px;
+  }
+
+  .foot a:hover {
+    text-decoration: underline;
+  }
+
+  .foot {
+    text-align:center;
+    position:static;
+  }
+
+  .foot ul {
+    display: table;
+    margin: 0 auto 0 auto;
+  }
+
+  .foot li {
+    list-style-type:none;
+    display:table-cell;
+    padding: 0 20px;
+  }
+
+  #links {
+    margin: 50px 0 0 0;
+  }
+
+  #links :nth-child(2) {
+    float:right;
+  }
+
+  #not-found {
+    text-align: center;
+  }
+
+  #not-found a {
+    font-family:"Old Standard TT",serif;
+    font-size: 200px;
+    text-decoration: none;
+    display: inline-block;
+    padding-top: 225px;
+  }
+
+  @media (max-width: 750px) {
+    body {
+      padding-left:20px;
+      padding-right:20px;
+    }
+
+    #nav h1 a {
+      font-size:28px;
+    }
+
+    #nav li {
+      font-size:13px;
+      padding: 0 15px;
+    }
+
+    .foot h1 a {
+      font-size:28px;
+    }
+
+    .foot li {
+      font-size:13px;
+      padding: 0 15px;
+    }
+
+    #content {
+      margin-top:0;
+      padding-top:50px;
+      font-size:14px;
+    }
+
+    #content h1 {
+      font-size:25px;
+    }
+
+    #content h2 {
+      font-size:22px;
+    }
+
+    .posts_listing li div {
+      font-size:12px;
+    }
+  }
+
+  @media (max-width: 400px) {
+    body {
+      padding-left:20px;
+      padding-right:20px;
+    }
+
+    #nav h1 a {
+      font-size:22px;
+    }
+
+    #nav li {
+      font-size:12px;
+      padding: 0 10px;
+    }
+
+    .foot h1 a {
+      font-size:22px;
+    }
+
+    .foot li {
+      font-size:12px;
+      padding: 0 10px;
+    }
+
+    #content {
+      margin-top:0;
+      padding-top:20px;
+      font-size:12px;
+    }
+
+    #content h1 {
+      font-size:20px;
+    }
+
+    #content h2 {
+      font-size:18px;
+    }
+
+    .posts_listing li div{
+      font-size:12px;
+    }
+  }
+</style>
+
+
+    
+  </head>
+
+  <body>
+    <section id=nav>
+      <h1><a href="/">mattrbianchi</a></h1>
+      <ul>
+        
+          <li><a href="/about">About</a></li>
+        
+          <li><a href="/reading">Reading</a></li>
+        
+          <li><a href="/resources">Resources</a></li>
+        
+          <li><a href="/setup">Setup</a></li>
+        
+      </ul>
+    </section>
+
+
+<section id=content>
+  <h1> How Tracking My Skills Improved Them </h1>
+
+  <div id=sub-header>
+    January 2017 · 5 minute read
+  </div>
+
+  <div class="entry-content">
+    <p>This post stems from me finding this <a href="https://youtu.be/FKTxC9pl-WM?list=PL3NQHgGj2vtuWPOxUMGwvRuEB0KVg-UXT">conference talk</a>. It would be best for you to watch it first and then come back but don&rsquo;t worry, it&rsquo;s pretty funny and really enlightening.</p>
+
+<p>Now, after watching that talk, I realized that ever since I started to learn how to program, I was dying the death of a thousand micro-leaks because there was so much I didn&rsquo;t know. We&rsquo;ve all been in that boat before: &ldquo;Well, real programmers use the terminal.&rdquo; So Matt does his best to learn the terminal, while trying to learn how to code <em>and</em> learn the concepts of computer architecture <em>and</em> keep up with engineering physics <em>and&hellip;</em> You get my point. Yeah, I learned <code>ls</code>. And of course I learned the material in my classes. But I was no where near mastering a terminal. _ I was piling up on B_. And I was in double trouble because I was so concerned with everything I didn&rsquo;t know that the things I thought I <em>did</em> know ended up in the &ldquo;Half-assed on C&rdquo; category. &ldquo;Ok, Matt, I get it&hellip; you&rsquo;re an idiot. What did you do about it?&rdquo; Please, read on.</p>
+
+<p>As a programmer, we get pulled all kinds of different ways with what we should or shouldn&rsquo;t know. So the first task that Kathy issues us with in that video is pulling stuff off B. All during college, I found odd jobs writing programs for various companies. So in college, I was writing mainly Java with some Python, C++, and even less C. But I would take semesters off through a co-op program and dive into C# and the .NET framework because evidently that&rsquo;s the only thing people in Alabama will pay programmers do. <em>Seriously, my friend and I refer to the area as the .NET belt in a very distasteful manner</em>. These programs would be websites (because everything is a website now) so they also needed HTML, CSS, and of course JS skills. Then, to top it off, I&rsquo;m one of those people who have the bad habit of seeing everything as a challenge and so the &ldquo;Real programmers do X&rdquo; statements really got to me. &ldquo;Real programmers are all doing mobile development&rdquo;. So I dove into the Android environment until I saw the divine light and gave my soul to Apple, but then in order to be a <em>real programmer</em> I needed to now learn the iOS environment. &ldquo;Real programmers learn vim&rdquo;. &ldquo;Real programmers program on a *nix environment&rdquo;. It&rsquo;s funny that Kathy refers to compensating with food, because that&rsquo;s exaclty what I did during this time. Then, the nail in the coffin was my last semester. That semester was the most rewarding in my undergrad, but it was not a walk in the park. One class was using F#, the other Python and Java, we decided on Rails for our senior design project (I would also end up the sole developer of the iOS app, where I lost a week of sleep learning the new swift language because that&rsquo;s what real iOS programmers do), and we were goaded by another &ldquo;Real programmers write documents in LaTeX&rdquo; statement so by god our senior project documentation would be an immaculate PDF written in LaTeX.</p>
+
+<p>Don&rsquo;t get me wrong, this extreme tour I put myself through was a great self discovering process. It was not however a healthy one. I gained 40lbs over my undergrad and ended up losing 20lbs of that my last semester because I only had time for a big breakfast in the morning and what I still affectionately call my coffee lunches. All this focus and time wasted could have been better used had I not piled up on B. Before encountering this talk, I had already finished The Pragmatic Programmer which advises a developer to pick their tools wisely and stick with them, especially your text editor. So I was already pulling stuff off B by working a full time job in one language and finally taking on one editor, vim, even though I didn&rsquo;t know I was doing it at the time. But I still struggled with encountering things I didn&rsquo;t know in vim, in git, in a shell, etc. But when working a full time job, I felt pressured to deliver and sitting down to learn would pull me away from getting something delivered. This is where this talk really changed my process.</p>
+
+<p>Kathy made me realize that I could look at improving my skills in an agile way. I immediately made a Trello board with columns &ldquo;Can&rsquo;t Do&rdquo;, &ldquo;Learning&rdquo;, and &ldquo;Mastered&rdquo;. While at work, if I came upon something I couldn&rsquo;t do in vim where I had to break down and use another editor, I immediately put that into my Can&rsquo;t Do column. Then I could track what I didn&rsquo;t know and come back to it after I was done bringing a previous skill into the Mastered column. This has brought my productivity and capability to another level where I am finally comfortable with git, the shell, vim, and even another editor that I&rsquo;ve made my main text editor. I also concentrated all my efforts into one programming language, Go, which has paid off considering my knowledge has given me the priviledge to work full time in the language. And finally, to fix my &ldquo;Half-assed on C&rdquo; I&rsquo;m going back to school for my masters through the OMSCS program at Georgia Tech. With having git, the shell, an editor, and the language I use at work officially under my belt, I plan to keep my focus strictly on this masters degree where I can bring the concepts of computer science I left on B to C.</p>
+
+  </div>
+
+  <div id=links>
+    
+      <a class="basic-alignment left" href="http://blog.mattrbianchi.com/post/get-started-with-acme/">&laquo; get started with acme</a>
+    
+    
+  </div>
+<hr>
+</section>
+
+
+<div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+        this.page.url = "http://blog.mattrbianchi.com";
+		this.page.identifier = "how tracking my skills improved them";
+    };
+
+    (function() {  
+        var d = document, s = d.createElement('script');
+        
+        s.src = '//mattrbianchi.disqus.com/embed.js';
+        
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+  
+<hr>
+	<div class="foot">
+		<ul>
+			<li>
+		<a href="http://github.com/mattrbianchi" target="_blank">
+			<img src="/mark-github.svg" alt="My GitHub Page"/>
+		</a>
+			</li>
+			<li>
+		<a href="mailto:mattrbianchi@gmail.com" target="_blank">
+			<img src="/mail.svg" alt="Send me an email"/>
+		</a>
+			</li>
+			<li>
+		<a href="http://twitter.com/mattrbianchi" target="_blank">
+			<img src="/twitter.png" alt="My Twitter Profile"/>
+		</a>
+			</li>
+		</ul>
+	</div>
+	<br/>
+</body>
+</html>
+
+
+

@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="referrer" content="no-referrer">
+    <base href="http://blog.mattrbianchi.com/">
+    
+
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400|Old+Standard+TT:400' rel='stylesheet' type='text/css'>
+
+    <link rel="icon" type="image/png" href="/favicon_16x16.png" sizes="16x16">
+    <link rel="icon" type="image/png" href="/favicon_32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="/favicon_128x128.png" sizes="128x128">
+
+    <title>
+      
+      
+         Reading 
+      
+    </title>
+    <link rel="canonical" href="http://blog.mattrbianchi.com/reading/">
+
+    <style>
+  * {
+    border:0;
+    font:inherit;
+    font-size:100%;
+    vertical-align:baseline;
+    margin:0;
+    padding:0;
+    color: black;
+  }
+
+  body {
+    font-family:'Open Sans', 'Myriad Pro', Myriad, sans-serif;
+    font-size:17px;
+    line-height:160%;
+    color:#1d1313;
+    max-width:700px;
+    margin:auto;
+  }
+
+  p {
+    margin: 20px 0;
+  }
+
+  a img {
+    border:none;
+  }
+
+  img {
+    margin: 10px auto 10px auto;
+    max-width: 100%;
+    display: block;
+  }
+
+  pre, code {
+    font: 12px Consolas, "Liberation Mono", Menlo, Courier, monospace;
+    background-color: #f7f7f7;
+  }
+
+  code {
+    font-size: 12px;
+    padding: 4px;
+  }
+
+  pre {
+    margin-top: 0;
+    margin-bottom: 16px;
+    word-wrap: normal;
+    padding: 16px;
+    overflow: auto;
+    font-size: 85%;
+    line-height: 1.45;
+  }
+
+  pre>code {
+    padding: 0;
+    margin: 0;
+    font-size: 100%;
+    word-break: normal;
+    white-space: pre;
+    background: transparent;
+    border: 0;
+  }
+
+  pre code {
+    display: inline;
+    max-width: auto;
+    padding: 0;
+    margin: 0;
+    overflow: visible;
+    line-height: inherit;
+    word-wrap: normal;
+    background-color: transparent;
+    border: 0;
+  }
+
+  pre code::before,
+  pre code::after {
+    content: normal;
+  }
+
+  em,q,em,dfn {
+    font-style:italic;
+  }
+
+  .sans,html .gist .gist-file .gist-meta {
+    font-family:"Open Sans","Myriad Pro",Myriad,sans-serif;
+  }
+
+  .mono,pre,code,tt,p code,li code {
+    font-family:Menlo,Monaco,"Andale Mono","lucida console","Courier New",monospace;
+  }
+
+  .heading,.serif,h1,h2,h3 {
+    font-family:"Old Standard TT",serif;
+  }
+
+  strong {
+    font-weight:600;
+  }
+
+  q:before {
+    content:"\201C";
+  }
+
+  q:after {
+    content:"\201D";
+  }
+
+  del,s {
+    text-decoration:line-through;
+  }
+
+  blockquote {
+    font-family:"Old Standard TT",serif;
+    text-align:center;
+    padding:50px;
+  }
+
+  blockquote p {
+    display:inline-block;
+    font-style:italic;
+  }
+
+  blockquote:before,blockquote:after {
+    font-family:"Old Standard TT",serif;
+    content:'\201C';
+    font-size:35px;
+    color:#403c3b;
+  }
+
+  blockquote:after {
+    content:'\201D';
+  }
+
+  hr {
+    width:40%;
+    height: 1px;
+    background:#403c3b;
+    margin: 25px auto;
+  }
+
+  h1 {
+    font-size:35px;
+  }
+
+  h2 {
+    font-size:28px;
+  }
+
+  h3 {
+    font-size:22px;
+    margin-top:18px;
+  }
+
+  h1 a,h2 a,h3 a {
+    text-decoration:none;
+  }
+
+  h1,h2 {
+    margin-top:28px;
+  }
+
+  #sub-header, time {
+    color:#403c3b;
+    font-size:13px;
+  }
+
+  #sub-header {
+    margin: 0 4px;
+  }
+
+  #nav h1 a {
+    font-size:35px;
+    color:#1d1313;
+    line-height:120%;
+  }
+
+  .posts_listing a,#nav a {
+    text-decoration: none;
+  }
+
+  .foot h1 a {
+    color:#1d1313;
+    line-height:120%;
+  }
+
+  .foot a {
+    text-decoration: none;
+  }
+
+  li {
+    margin-left: 20px;
+  }
+
+  ul li {
+    margin-left: 5px;
+  }
+
+  ul li {
+    list-style-type: none;
+  }
+  ul li:before {
+    content:"\00BB \0020";
+  }
+
+  #nav ul li:before, .posts_listing li:before {
+    content:'';
+    margin-right:0;
+  }
+
+  .foot ul li:before {
+    content:'';
+    margin-right:0;
+  }
+
+  #content {
+    text-align:left;
+    width:100%;
+    font-size:15px;
+    padding:60px 0 80px;
+  }
+
+  #content h1,#content h2 {
+    margin-bottom:5px;
+  }
+
+  #content h2 {
+    font-size:25px;
+  }
+
+  #content .entry-content {
+    margin-top:15px;
+  }
+
+  #content time {
+    margin-left:3px;
+  }
+
+  #content h1 {
+    font-size:30px;
+  }
+
+  .highlight {
+    margin: 10px 0;
+  }
+
+  .posts_listing {
+    margin:0 0 50px;
+  }
+
+  .posts_listing li {
+    margin:0 0 25px 15px;
+  }
+
+  .posts_listing li a:hover,#nav a:hover {
+    text-decoration: underline;
+  }
+
+  #nav {
+    text-align:center;
+    position:static;
+    margin-top:60px;
+  }
+
+  #nav ul {
+    display: table;
+    margin: 8px auto 0 auto;
+  }
+
+  #nav li {
+    list-style-type:none;
+    display:table-cell;
+    font-size:15px;
+    padding: 0 20px;
+  }
+
+  .foot a:hover {
+    text-decoration: underline;
+  }
+
+  .foot {
+    text-align:center;
+    position:static;
+  }
+
+  .foot ul {
+    display: table;
+    margin: 0 auto 0 auto;
+  }
+
+  .foot li {
+    list-style-type:none;
+    display:table-cell;
+    padding: 0 20px;
+  }
+
+  #links {
+    margin: 50px 0 0 0;
+  }
+
+  #links :nth-child(2) {
+    float:right;
+  }
+
+  #not-found {
+    text-align: center;
+  }
+
+  #not-found a {
+    font-family:"Old Standard TT",serif;
+    font-size: 200px;
+    text-decoration: none;
+    display: inline-block;
+    padding-top: 225px;
+  }
+
+  @media (max-width: 750px) {
+    body {
+      padding-left:20px;
+      padding-right:20px;
+    }
+
+    #nav h1 a {
+      font-size:28px;
+    }
+
+    #nav li {
+      font-size:13px;
+      padding: 0 15px;
+    }
+
+    .foot h1 a {
+      font-size:28px;
+    }
+
+    .foot li {
+      font-size:13px;
+      padding: 0 15px;
+    }
+
+    #content {
+      margin-top:0;
+      padding-top:50px;
+      font-size:14px;
+    }
+
+    #content h1 {
+      font-size:25px;
+    }
+
+    #content h2 {
+      font-size:22px;
+    }
+
+    .posts_listing li div {
+      font-size:12px;
+    }
+  }
+
+  @media (max-width: 400px) {
+    body {
+      padding-left:20px;
+      padding-right:20px;
+    }
+
+    #nav h1 a {
+      font-size:22px;
+    }
+
+    #nav li {
+      font-size:12px;
+      padding: 0 10px;
+    }
+
+    .foot h1 a {
+      font-size:22px;
+    }
+
+    .foot li {
+      font-size:12px;
+      padding: 0 10px;
+    }
+
+    #content {
+      margin-top:0;
+      padding-top:20px;
+      font-size:12px;
+    }
+
+    #content h1 {
+      font-size:20px;
+    }
+
+    #content h2 {
+      font-size:18px;
+    }
+
+    .posts_listing li div{
+      font-size:12px;
+    }
+  }
+</style>
+
+
+    
+  </head>
+
+  <body>
+    <section id=nav>
+      <h1><a href="/">mattrbianchi</a></h1>
+      <ul>
+        
+          <li><a href="/about">About</a></li>
+        
+          <li><a href="/reading">Reading</a></li>
+        
+          <li><a href="/resources">Resources</a></li>
+        
+          <li><a href="/setup">Setup</a></li>
+        
+      </ul>
+    </section>
+
+
+<section id=content>
+  <h1> Reading </h1>
+
+  <div id=sub-header>
+     · 6 minute read
+  </div>
+
+  <div class="entry-content">
+    
+
+<p>I love getting professional opinions on books. <em>Especially</em> with technical books because they are time consuming to read and I want to get the most benefit from my time. That&rsquo;s why I&rsquo;m making this list to contribute my reviews so that other people can use them to make decisions on what to read to progress their own careers.</p>
+
+<h2 id="table-of-contents">Table of Contents</h2>
+
+<p><strong>Books for All Developers</strong></p>
+
+<p>The Pragmatic Programmer
+Algorithms + Data Structures = Programs</p>
+
+<p><strong>Learning About the Community</strong></p>
+
+<p>Just for Fun: The Story of an Accidental Revolutionary</p>
+
+<p><strong>Productivity</strong></p>
+
+<p>The Productive Programmer
+Conquering the Command Line</p>
+
+<p><strong>Specific Topics</strong></p>
+
+<p>Go in Action</p>
+
+<p><strong>Self-Improvement</strong></p>
+
+<p>100 Ways to Improve Your Writing
+The Food Lab</p>
+
+<p><strong>Health</strong></p>
+
+<p>The Healthy Programmer
+The Engine 2 Diet</p>
+
+<hr />
+
+<h3 id="great-books-for-all-developers">Great Books for All Developers</h3>
+
+<h4 id="the-pragmatic-programmer">The Pragmatic Programmer</h4>
+
+<p>This book has left a lasting impression and was a great starting place to continue my learning after college. Instead of teaching an algorithm or some abstract theory, the authors give you their advice composed from years of experience as established professionals in our field. This was a priceless insight into things like working with a team, handling a real world project, and how to choose the best tools and libraries that will make your life easier. I also <em>love</em> how this book was written in a handbook-like format where you can dive back into any topic and have all of its context contained to that chapter. This way, after thoroughly enjoying it from cover to cover, I can come back for a refresher when I catch myself thinking &ldquo;What would David Thomas and Andrew Hunt do?&rdquo;.</p>
+
+<h4 id="algorithms-data-structures-programs">Algorithms + Data Structures = Programs</h4>
+
+<p><em>In Progress</em></p>
+
+<h3 id="learning-about-the-community">Learning About the Community</h3>
+
+<h4 id="just-for-fun">Just for Fun</h4>
+
+<p>Just For Fun was a biography about Linus Torvalds&rsquo; life up until about 2002. I believe it is important for programmers to understand how humankind has gotten to this point in technology and to understand the mindset behind the people who pushed it. Just like how we must study all history in order to strive to do better on behalf of our predecessors, programmers should get a solid course in how the fantastic machine they carry around in their pockets came to be. I am constantly disappointed by the lack of knowledge programmers my age (and older) have of the giants they so quickly stand on the shoulders of. This book was a wonderfully fascinating view into the life of a man who singlehandedly shaped our field through simply filling a need of his—not once—but twice. It was inspiring to hear his story of how he made Linux with the knowledge he learned from Andrew Tanenbaum&rsquo;s Operating Systems Design and Implementation and the manuals for his computer&rsquo;s architecture. It really showed that it is as simple as sucking it up and <code>rfm</code>!</p>
+
+<h3 id="productivity">Productivity</h3>
+
+<h4 id="the-productive-programmer">The Productive Programmer</h4>
+
+<p>It&rsquo;s always good to become more productive in your work and the earlier you start the more it pays off later on. While the author does give some direct tips and tricks, I like how he approaches the other part of the book as just words of wisdom to give you an idea of how to recognize when you could be more productive and, then, ways to approach that situation. I like to think of this book as a great next book to read after <em>The Pragmatic Programmer</em> because he reiterates some of its great points and gives his personal examples of them working in real life. <em>The Pragmatic Programmer</em> tells you why you should do some things a certain way, <em>The Productive Programmer</em> gives you a starting point for how to do those things. I was sold that I should learn the command line, choose one editor to rule them all, and keep a &ldquo;real&rdquo; scripting language in my back pocket after reading <em>The Pragmatic Programmer</em>. But I was given a tour of the commands I should learn first to make me the most productive, along with editors and languages that earned the possibility of being in my toolbelt in <em>The Productive Programmer</em> and for that, I thank Neal Ford.</p>
+
+<h4 id="conquering-the-command-line">Conquering the Command Line</h4>
+
+<p>The terminal is crucial to a developer&rsquo;s productivity. I see developers download a UI tool for basically every terminal command out there. It&rsquo;s perplexing to think that learning where to click on 50 UI tools surpasses getting familiar with terminal commands that haven&rsquo;t changed in years. But I get it, the terminal is blank and scary and the documentation will make you fall into a deep slumber for 200 years so I&rsquo;m going to say it&rsquo;s the lack of a good guide that&rsquo;s the blocker here. Mark Bates also saw this problem and was awesome enough to give us all a great guide. This is another book that is in handbook format, so feel free to skip to a chapter about a command you find most useful. He does a great job of getting straight to examples to teach the command and not getting caught in the weeds with all the possibilities like other resources. Mark Bates is also an all around cool person in our field and you should look up some of his talks for your continued learning.</p>
+
+<h3 id="specific-topics">Specific Topics</h3>
+
+<h4 id="go-in-action">Go in Action</h4>
+
+<p>After taking the Tour of Go, I bought Go in Action and haven&rsquo;t regretted it. It&rsquo;s great for someone who already knows how to program, but wants to get up to speed on the details and inner workings of Go. The authors, William Kennedy, Brian Ketelsen, and Erik St. Martin, did a great job of giving examples I could expand into a practical applications while keeping them concise (<em>which keep the book light, in both reading and weight</em>). This is definitely a must read for anyone who wants to move beyond the syntax of Go and ramp up on its idioms.</p>
+
+<h3 id="self-improvement">Self-Improvement</h3>
+
+<h4 id="100-ways-to-improve-your-writing">100 Ways to Improve Your Writing</h4>
+
+<p>I&rsquo;m terrible at writing. I have a lot to make up for and the faster the better. This book is great for giving small nuggets of advice that you can immediately use in your writing. The author, Gary Provost, does a brilliant job of making it a pleasure to read the book. Most of the time, he crafts his own writing to be examples of the very thing he is teaching at that very moment. It is a masterpiece that you can read front to back or just dive in to a section that you really need help in. As an added bonus, the book is printed in that specific paper that gives you that perfect book smell.</p>
+
+<h4 id="the-food-lab">The Food Lab</h4>
+
+<p><em>In Progress</em></p>
+
+<h3 id="health">Health</h3>
+
+<h4 id="the-healthy-programmer">The Healthy Programmer</h4>
+
+<p><em>In Progress</em></p>
+
+<h4 id="the-engine-2-diet">The Engine 2 Diet</h4>
+
+<p>I&rsquo;m always game for improving my health and this book was a very interesting read on what can be a very boring subject. Since half the book is recipes, it&rsquo;s a very light read on inspiring stories of people reversing their various diseases through a vegan diet. The book seems to also be backed by a lot of science which I appreciate in a field with as many or more buzz words as mine. I look forward to looking through the recipes and occasionally enjoying a tasty vegan meal.</p>
+
+  </div>
+
+</section>
+
+  
+<hr>
+	<div class="foot">
+		<ul>
+			<li>
+		<a href="http://github.com/mattrbianchi" target="_blank">
+			<img src="/mark-github.svg" alt="My GitHub Page"/>
+		</a>
+			</li>
+			<li>
+		<a href="mailto:mattrbianchi@gmail.com" target="_blank">
+			<img src="/mail.svg" alt="Send me an email"/>
+		</a>
+			</li>
+			<li>
+		<a href="http://twitter.com/mattrbianchi" target="_blank">
+			<img src="/twitter.png" alt="My Twitter Profile"/>
+		</a>
+			</li>
+		</ul>
+	</div>
+	<br/>
+</body>
+</html>
+
+
+

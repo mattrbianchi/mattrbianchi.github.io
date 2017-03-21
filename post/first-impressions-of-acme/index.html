@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="referrer" content="no-referrer">
+    <base href="http://blog.mattrbianchi.com/">
+    
+
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400|Old+Standard+TT:400' rel='stylesheet' type='text/css'>
+
+    <link rel="icon" type="image/png" href="/favicon_16x16.png" sizes="16x16">
+    <link rel="icon" type="image/png" href="/favicon_32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="/favicon_128x128.png" sizes="128x128">
+
+    <title>
+      
+      
+         First Impressions Of Acme 
+      
+    </title>
+    <link rel="canonical" href="http://blog.mattrbianchi.com/post/first-impressions-of-acme/">
+
+    <style>
+  * {
+    border:0;
+    font:inherit;
+    font-size:100%;
+    vertical-align:baseline;
+    margin:0;
+    padding:0;
+    color: black;
+  }
+
+  body {
+    font-family:'Open Sans', 'Myriad Pro', Myriad, sans-serif;
+    font-size:17px;
+    line-height:160%;
+    color:#1d1313;
+    max-width:700px;
+    margin:auto;
+  }
+
+  p {
+    margin: 20px 0;
+  }
+
+  a img {
+    border:none;
+  }
+
+  img {
+    margin: 10px auto 10px auto;
+    max-width: 100%;
+    display: block;
+  }
+
+  pre, code {
+    font: 12px Consolas, "Liberation Mono", Menlo, Courier, monospace;
+    background-color: #f7f7f7;
+  }
+
+  code {
+    font-size: 12px;
+    padding: 4px;
+  }
+
+  pre {
+    margin-top: 0;
+    margin-bottom: 16px;
+    word-wrap: normal;
+    padding: 16px;
+    overflow: auto;
+    font-size: 85%;
+    line-height: 1.45;
+  }
+
+  pre>code {
+    padding: 0;
+    margin: 0;
+    font-size: 100%;
+    word-break: normal;
+    white-space: pre;
+    background: transparent;
+    border: 0;
+  }
+
+  pre code {
+    display: inline;
+    max-width: auto;
+    padding: 0;
+    margin: 0;
+    overflow: visible;
+    line-height: inherit;
+    word-wrap: normal;
+    background-color: transparent;
+    border: 0;
+  }
+
+  pre code::before,
+  pre code::after {
+    content: normal;
+  }
+
+  em,q,em,dfn {
+    font-style:italic;
+  }
+
+  .sans,html .gist .gist-file .gist-meta {
+    font-family:"Open Sans","Myriad Pro",Myriad,sans-serif;
+  }
+
+  .mono,pre,code,tt,p code,li code {
+    font-family:Menlo,Monaco,"Andale Mono","lucida console","Courier New",monospace;
+  }
+
+  .heading,.serif,h1,h2,h3 {
+    font-family:"Old Standard TT",serif;
+  }
+
+  strong {
+    font-weight:600;
+  }
+
+  q:before {
+    content:"\201C";
+  }
+
+  q:after {
+    content:"\201D";
+  }
+
+  del,s {
+    text-decoration:line-through;
+  }
+
+  blockquote {
+    font-family:"Old Standard TT",serif;
+    text-align:center;
+    padding:50px;
+  }
+
+  blockquote p {
+    display:inline-block;
+    font-style:italic;
+  }
+
+  blockquote:before,blockquote:after {
+    font-family:"Old Standard TT",serif;
+    content:'\201C';
+    font-size:35px;
+    color:#403c3b;
+  }
+
+  blockquote:after {
+    content:'\201D';
+  }
+
+  hr {
+    width:40%;
+    height: 1px;
+    background:#403c3b;
+    margin: 25px auto;
+  }
+
+  h1 {
+    font-size:35px;
+  }
+
+  h2 {
+    font-size:28px;
+  }
+
+  h3 {
+    font-size:22px;
+    margin-top:18px;
+  }
+
+  h1 a,h2 a,h3 a {
+    text-decoration:none;
+  }
+
+  h1,h2 {
+    margin-top:28px;
+  }
+
+  #sub-header, time {
+    color:#403c3b;
+    font-size:13px;
+  }
+
+  #sub-header {
+    margin: 0 4px;
+  }
+
+  #nav h1 a {
+    font-size:35px;
+    color:#1d1313;
+    line-height:120%;
+  }
+
+  .posts_listing a,#nav a {
+    text-decoration: none;
+  }
+
+  .foot h1 a {
+    color:#1d1313;
+    line-height:120%;
+  }
+
+  .foot a {
+    text-decoration: none;
+  }
+
+  li {
+    margin-left: 20px;
+  }
+
+  ul li {
+    margin-left: 5px;
+  }
+
+  ul li {
+    list-style-type: none;
+  }
+  ul li:before {
+    content:"\00BB \0020";
+  }
+
+  #nav ul li:before, .posts_listing li:before {
+    content:'';
+    margin-right:0;
+  }
+
+  .foot ul li:before {
+    content:'';
+    margin-right:0;
+  }
+
+  #content {
+    text-align:left;
+    width:100%;
+    font-size:15px;
+    padding:60px 0 80px;
+  }
+
+  #content h1,#content h2 {
+    margin-bottom:5px;
+  }
+
+  #content h2 {
+    font-size:25px;
+  }
+
+  #content .entry-content {
+    margin-top:15px;
+  }
+
+  #content time {
+    margin-left:3px;
+  }
+
+  #content h1 {
+    font-size:30px;
+  }
+
+  .highlight {
+    margin: 10px 0;
+  }
+
+  .posts_listing {
+    margin:0 0 50px;
+  }
+
+  .posts_listing li {
+    margin:0 0 25px 15px;
+  }
+
+  .posts_listing li a:hover,#nav a:hover {
+    text-decoration: underline;
+  }
+
+  #nav {
+    text-align:center;
+    position:static;
+    margin-top:60px;
+  }
+
+  #nav ul {
+    display: table;
+    margin: 8px auto 0 auto;
+  }
+
+  #nav li {
+    list-style-type:none;
+    display:table-cell;
+    font-size:15px;
+    padding: 0 20px;
+  }
+
+  .foot a:hover {
+    text-decoration: underline;
+  }
+
+  .foot {
+    text-align:center;
+    position:static;
+  }
+
+  .foot ul {
+    display: table;
+    margin: 0 auto 0 auto;
+  }
+
+  .foot li {
+    list-style-type:none;
+    display:table-cell;
+    padding: 0 20px;
+  }
+
+  #links {
+    margin: 50px 0 0 0;
+  }
+
+  #links :nth-child(2) {
+    float:right;
+  }
+
+  #not-found {
+    text-align: center;
+  }
+
+  #not-found a {
+    font-family:"Old Standard TT",serif;
+    font-size: 200px;
+    text-decoration: none;
+    display: inline-block;
+    padding-top: 225px;
+  }
+
+  @media (max-width: 750px) {
+    body {
+      padding-left:20px;
+      padding-right:20px;
+    }
+
+    #nav h1 a {
+      font-size:28px;
+    }
+
+    #nav li {
+      font-size:13px;
+      padding: 0 15px;
+    }
+
+    .foot h1 a {
+      font-size:28px;
+    }
+
+    .foot li {
+      font-size:13px;
+      padding: 0 15px;
+    }
+
+    #content {
+      margin-top:0;
+      padding-top:50px;
+      font-size:14px;
+    }
+
+    #content h1 {
+      font-size:25px;
+    }
+
+    #content h2 {
+      font-size:22px;
+    }
+
+    .posts_listing li div {
+      font-size:12px;
+    }
+  }
+
+  @media (max-width: 400px) {
+    body {
+      padding-left:20px;
+      padding-right:20px;
+    }
+
+    #nav h1 a {
+      font-size:22px;
+    }
+
+    #nav li {
+      font-size:12px;
+      padding: 0 10px;
+    }
+
+    .foot h1 a {
+      font-size:22px;
+    }
+
+    .foot li {
+      font-size:12px;
+      padding: 0 10px;
+    }
+
+    #content {
+      margin-top:0;
+      padding-top:20px;
+      font-size:12px;
+    }
+
+    #content h1 {
+      font-size:20px;
+    }
+
+    #content h2 {
+      font-size:18px;
+    }
+
+    .posts_listing li div{
+      font-size:12px;
+    }
+  }
+</style>
+
+
+    
+  </head>
+
+  <body>
+    <section id=nav>
+      <h1><a href="/">mattrbianchi</a></h1>
+      <ul>
+        
+          <li><a href="/about">About</a></li>
+        
+          <li><a href="/reading">Reading</a></li>
+        
+          <li><a href="/resources">Resources</a></li>
+        
+          <li><a href="/setup">Setup</a></li>
+        
+      </ul>
+    </section>
+
+
+<section id=content>
+  <h1> First Impressions Of Acme </h1>
+
+  <div id=sub-header>
+    September 2016 · 7 minute read
+  </div>
+
+  <div class="entry-content">
+    
+
+<p>I suppose that after learning Go and falling in love with the community around it, it was inevitable that I would find Acme, Rob Pike&rsquo;s and Russ Cox&rsquo;s editor of choice, and shamelessly install it like the crazy fan boy I am. And I&rsquo;m sure glad I did!</p>
+
+<h3 id="join-me-for-a-nice-brew">Join Me for a Nice Brew</h3>
+
+<p>My first pleasant discovery was how easy it was to install this gem. If you&rsquo;re on a Mac, it&rsquo;s as easy as <code>brew install plan9port</code>, which actually provides you with all the tools from Plan 9, <em>or so I&rsquo;ve heard</em>. Since a lot of these tools keep the same name as their Unix cousins, they are &ldquo;name-spaced&rdquo; under the <code>9</code> command to avoid colliding with your native binaries. Therefore, opening Acme is as simple as <code>9 acme</code>. Then you might see my first &ldquo;furrowed brow moment&rdquo; with the editor: sometimes Acme will load as a blank screen. But I quickly figured out that it fixes itself after resizing the window <em>and this editor is best used at full screen</em>, so no actual UX heart burn there. Also, if you watch the Plan 9 intro video I link at the bottom, you might come to the same conclusion I have: resizing the window has a lot to do with when Acme loads.</p>
+
+<p>Ok, so now I have Acme installed and running on my Mac. What&rsquo;s next? Well I initially learned a few moves and concepts for Acme from Russ Cox&rsquo;s intro video, which I also have linked below. Remarkably, the intro video covers <strong>a lot</strong> about how you interact with Acme in about twenty minutes and it&rsquo;s all very easy to remember. So my second &ldquo;wow&rdquo; moment was how well I could move around and work in Acme compared to the first spartan editor I&rsquo;ve attempted to learn, <em>with some success</em>, Vim. Acme is <strong>much</strong> easier to learn than Vim.</p>
+
+<h3 id="the-mouse-in-the-stone-or-uhh-box">The Mouse in the Stone (or uhh&hellip; Box)</h3>
+
+<p>After watching Russ Cox&rsquo;s video on Acme, I knew about the suggestion to use a three button mouse. If your scroll wheel clicks (<em>most of them do</em>) this can serve as your middle button if you want to give this editor a test drive. But when I try something, I dive right in and that meant finding a three button mouse somehow, some way, at work. Luckily, we have one of those boxes at work. Yeah. You know what I&rsquo;m talking about. <strong>That</strong> box. The one that holds the peripherals your boss&rsquo;s boss probably used to sling code before you were but a twinkle in your parents&rsquo; eyes. In that box, I found a working (<em>important</em>), clean (<em>super important</em>) Sun Microsystems three button mouse. It was soul crushing grey, still used a track ball, but somehow had the most satisfying click I&rsquo;ve ever experienced. It was simple, it was old, yet oddly pleasant. It matched Acme perfectly.</p>
+
+<h3 id="indentation-and-fonts-and-scrolling-oh-my">Indentation, and Fonts, and Scrolling, Oh My!</h3>
+
+<p>With my weapon of choice in hand, it was time to take what I had learned from Russ Cox and try to do some work. Unfortunately, this is where we get to a bumpy part in the road for this narrative. Currently, I am on a web project that is mostly HTML and JavaScript. I do not advise trying to edit HTML as your first task in Acme. You see, Acme has no syntax highlighting. It uses a proportional font <strong>by default</strong>. The <code>TAB</code> key will insert a literal <code>TAB</code> character worth the width of 4 zeros in this proportional font which means if someone used spaces for indentation your <code>TAB</code>s won&rsquo;t line up. <em>The up and down arrow keys scroll the window for God&rsquo;s sake</em>. I know the programmers who started with Python just heard the word <code>TAB</code> and are recovering from their minor faint, but I have more to say so please get some air and prop up your feet.</p>
+
+<p>Trying to edit that darn HTML file was the most annoying point so far in my journey to learn Acme. I knew I needed to learn more about <strong>how</strong> to use Acme to get around these pain points, so I went to the internet. First, I found out about the <code>-a</code> flag, which tells Acme to copy the whitespace from the previous line to the next line. This means it will copy any spaces, too, which I didn&rsquo;t realize at the time. <em>Let&rsquo;s just say much profanity was used</em>. But then, I found a blog post series by someone who recorded their trial of Acme and two discussions on the 9fans mailing list that helped me both grok and use Acme. Like the other resources, they are linked below.</p>
+
+<h3 id="the-knights-who-say-no">The Knights Who Say&hellip; No!</h3>
+
+<p>In the first mailing list discussion, Russ Cox answers a list of questions about how to do a lot of the things other editors can do, in Acme. The answer was mostly &ldquo;just say no&rdquo;. I find it amusing that, just like in our actual practice of writing software, we should say no to some of the ideas imposed upon us on how to literally type out our software. In his brief answers, Russ Cox carries a lot of un-emphasized proverbs for interacting with text, so much so that I will have to write about it in a second post.</p>
+
+<h3 id="wax-on">Wax On&hellip;</h3>
+
+<p>The second discussion was an amazing share of <code>Edit</code> &ldquo;scriptlets&rdquo;. <code>Edit</code> is an Acme command that takes a form of regular expression, <em>very similar to Vim&rsquo;s :% command</em>, to describe what to substitute for something else in a file. While I had already used <code>Edit</code> a little bit, these scripts allowed me to really broaden my &ldquo;<code>Edit</code> foo&rdquo; and do some desperately needed things like replacing 4 spaces with a <code>TAB</code> and moving selected text in or out one <code>TAB</code>. While Vim or Emacs users are probably laughing right now that a regular expression is needed to indent a block of code, I appreciate the simplicity and the application easily scales to powerful transformations.</p>
+
+<h3 id="as-close-as-a-muggle-can-get">As Close as a Muggle Can Get</h3>
+
+<p>Finally, the blog post series gave me some practical tips, like how Acme can <code>Dump</code> its current set up into a file to be <code>Load</code>ed later. This feature is absolutely amazing. At the end of the day, I can just <code>Dump</code> my window set up, <code>Load</code> it in the morning, and hit the ground running again. No more morning window dragging for me.</p>
+
+<p>Another nifty tip is keeping a scratch file. This is a file you write to disk with all the relevant shell commands you normally execute day to day and when working on a specific project. That way, the text is right there for you to tell Acme to run. Oh yeah, did I fail to mention that part? Every bit of text in Acme can be sent to your shell as a command to be executed. Then any output from that command gets <code>echo</code>ed back to an Acme window. Then <strong>that</strong> text gives you more possible shell commands. It&rsquo;s a very productive feedback loop and a great experience I believe Emacs users can sympathize with. If you don&rsquo;t completely understand what I mean, just know I feel like Harry Potter and my mouse is fresh out of Ollivander&rsquo;s. I&rsquo;ll leave the explaining to Russ Cox&rsquo;s intro video, considering he has ten or more years of experience and I&rsquo;m still over here waving my mouse around like an idiot, trying to learn &ldquo;Alohomora&rdquo;.</p>
+
+<h3 id="the-neverending-story">The Neverending Story&hellip;</h3>
+
+<p>To summarize, some of the reasons why I wanted to try Acme and why I&rsquo;m sticking with Acme: I can come into work in the morning, <code>Load</code> my project file, and I&rsquo;m instantly thrown back into the context I lost overnight. Having the window locations open back up in the same locations they were before really helps me ramp up faster on where I left off. Then, without swapping to a terminal, I can send some commands from Acme to start up my web server or my test suite and start coding. It&rsquo;s really a tiling window manager meets task manager instead of a text editor, but with zero need for configuration. That&rsquo;s probably the best feature, the fact that I didn&rsquo;t need to spend any time configuring Acme to be impressively productive.</p>
+
+<p>And I haven&rsquo;t even touched on how extensible this truly unique editor is. Maybe in another post.</p>
+
+<p><a href="https://www.youtube.com/watch?v=dP1xVpMPn8M">A Tour of the Acme Editor</a><br />
+<a href="http://echosa.github.io/blog/2014/06/18/lets-try-acme-ep-0-research/">Lets Try Acme</a><br />
+<a href="https://groups.google.com/d/msg/comp.os.plan9/7KGswJEWd7c/QxulBRqrwgoJ">Acme Edit scriptlets</a><br />
+<a href="https://groups.google.com/d/msg/comp.os.plan9/_YUEVbTFuME/tJHB8y8-0vYJ">Using the Acme Editor</a><br />
+<a href="https://www.youtube.com/watch?v=fGnpNlhv6po">Plan 9 - Thursday Night Tech Talks</a></p>
+
+  </div>
+
+  <div id=links>
+    
+      <a class="basic-alignment left" href="http://blog.mattrbianchi.com/post/go-is-my-spirit-language/">&laquo; go is my spirit language</a>
+    
+    
+      <a class="basic-alignment left" href="http://blog.mattrbianchi.com/post/get-started-with-acme/">get started with acme &raquo;</a>
+    
+  </div>
+<hr>
+</section>
+
+
+<div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+        this.page.url = "http://blog.mattrbianchi.com";
+		this.page.identifier = "first impressions of acme";
+    };
+
+    (function() {  
+        var d = document, s = d.createElement('script');
+        
+        s.src = '//mattrbianchi.disqus.com/embed.js';
+        
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+  
+<hr>
+	<div class="foot">
+		<ul>
+			<li>
+		<a href="http://github.com/mattrbianchi" target="_blank">
+			<img src="/mark-github.svg" alt="My GitHub Page"/>
+		</a>
+			</li>
+			<li>
+		<a href="mailto:mattrbianchi@gmail.com" target="_blank">
+			<img src="/mail.svg" alt="Send me an email"/>
+		</a>
+			</li>
+			<li>
+		<a href="http://twitter.com/mattrbianchi" target="_blank">
+			<img src="/twitter.png" alt="My Twitter Profile"/>
+		</a>
+			</li>
+		</ul>
+	</div>
+	<br/>
+</body>
+</html>
+
+
+

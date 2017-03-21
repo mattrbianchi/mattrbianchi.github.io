@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="referrer" content="no-referrer">
+    <base href="http://blog.mattrbianchi.com/">
+    
+
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400|Old+Standard+TT:400' rel='stylesheet' type='text/css'>
+
+    <link rel="icon" type="image/png" href="/favicon_16x16.png" sizes="16x16">
+    <link rel="icon" type="image/png" href="/favicon_32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="/favicon_128x128.png" sizes="128x128">
+
+    <title>
+      
+      
+         Get Started With Acme 
+      
+    </title>
+    <link rel="canonical" href="http://blog.mattrbianchi.com/post/get-started-with-acme/">
+
+    <style>
+  * {
+    border:0;
+    font:inherit;
+    font-size:100%;
+    vertical-align:baseline;
+    margin:0;
+    padding:0;
+    color: black;
+  }
+
+  body {
+    font-family:'Open Sans', 'Myriad Pro', Myriad, sans-serif;
+    font-size:17px;
+    line-height:160%;
+    color:#1d1313;
+    max-width:700px;
+    margin:auto;
+  }
+
+  p {
+    margin: 20px 0;
+  }
+
+  a img {
+    border:none;
+  }
+
+  img {
+    margin: 10px auto 10px auto;
+    max-width: 100%;
+    display: block;
+  }
+
+  pre, code {
+    font: 12px Consolas, "Liberation Mono", Menlo, Courier, monospace;
+    background-color: #f7f7f7;
+  }
+
+  code {
+    font-size: 12px;
+    padding: 4px;
+  }
+
+  pre {
+    margin-top: 0;
+    margin-bottom: 16px;
+    word-wrap: normal;
+    padding: 16px;
+    overflow: auto;
+    font-size: 85%;
+    line-height: 1.45;
+  }
+
+  pre>code {
+    padding: 0;
+    margin: 0;
+    font-size: 100%;
+    word-break: normal;
+    white-space: pre;
+    background: transparent;
+    border: 0;
+  }
+
+  pre code {
+    display: inline;
+    max-width: auto;
+    padding: 0;
+    margin: 0;
+    overflow: visible;
+    line-height: inherit;
+    word-wrap: normal;
+    background-color: transparent;
+    border: 0;
+  }
+
+  pre code::before,
+  pre code::after {
+    content: normal;
+  }
+
+  em,q,em,dfn {
+    font-style:italic;
+  }
+
+  .sans,html .gist .gist-file .gist-meta {
+    font-family:"Open Sans","Myriad Pro",Myriad,sans-serif;
+  }
+
+  .mono,pre,code,tt,p code,li code {
+    font-family:Menlo,Monaco,"Andale Mono","lucida console","Courier New",monospace;
+  }
+
+  .heading,.serif,h1,h2,h3 {
+    font-family:"Old Standard TT",serif;
+  }
+
+  strong {
+    font-weight:600;
+  }
+
+  q:before {
+    content:"\201C";
+  }
+
+  q:after {
+    content:"\201D";
+  }
+
+  del,s {
+    text-decoration:line-through;
+  }
+
+  blockquote {
+    font-family:"Old Standard TT",serif;
+    text-align:center;
+    padding:50px;
+  }
+
+  blockquote p {
+    display:inline-block;
+    font-style:italic;
+  }
+
+  blockquote:before,blockquote:after {
+    font-family:"Old Standard TT",serif;
+    content:'\201C';
+    font-size:35px;
+    color:#403c3b;
+  }
+
+  blockquote:after {
+    content:'\201D';
+  }
+
+  hr {
+    width:40%;
+    height: 1px;
+    background:#403c3b;
+    margin: 25px auto;
+  }
+
+  h1 {
+    font-size:35px;
+  }
+
+  h2 {
+    font-size:28px;
+  }
+
+  h3 {
+    font-size:22px;
+    margin-top:18px;
+  }
+
+  h1 a,h2 a,h3 a {
+    text-decoration:none;
+  }
+
+  h1,h2 {
+    margin-top:28px;
+  }
+
+  #sub-header, time {
+    color:#403c3b;
+    font-size:13px;
+  }
+
+  #sub-header {
+    margin: 0 4px;
+  }
+
+  #nav h1 a {
+    font-size:35px;
+    color:#1d1313;
+    line-height:120%;
+  }
+
+  .posts_listing a,#nav a {
+    text-decoration: none;
+  }
+
+  .foot h1 a {
+    color:#1d1313;
+    line-height:120%;
+  }
+
+  .foot a {
+    text-decoration: none;
+  }
+
+  li {
+    margin-left: 20px;
+  }
+
+  ul li {
+    margin-left: 5px;
+  }
+
+  ul li {
+    list-style-type: none;
+  }
+  ul li:before {
+    content:"\00BB \0020";
+  }
+
+  #nav ul li:before, .posts_listing li:before {
+    content:'';
+    margin-right:0;
+  }
+
+  .foot ul li:before {
+    content:'';
+    margin-right:0;
+  }
+
+  #content {
+    text-align:left;
+    width:100%;
+    font-size:15px;
+    padding:60px 0 80px;
+  }
+
+  #content h1,#content h2 {
+    margin-bottom:5px;
+  }
+
+  #content h2 {
+    font-size:25px;
+  }
+
+  #content .entry-content {
+    margin-top:15px;
+  }
+
+  #content time {
+    margin-left:3px;
+  }
+
+  #content h1 {
+    font-size:30px;
+  }
+
+  .highlight {
+    margin: 10px 0;
+  }
+
+  .posts_listing {
+    margin:0 0 50px;
+  }
+
+  .posts_listing li {
+    margin:0 0 25px 15px;
+  }
+
+  .posts_listing li a:hover,#nav a:hover {
+    text-decoration: underline;
+  }
+
+  #nav {
+    text-align:center;
+    position:static;
+    margin-top:60px;
+  }
+
+  #nav ul {
+    display: table;
+    margin: 8px auto 0 auto;
+  }
+
+  #nav li {
+    list-style-type:none;
+    display:table-cell;
+    font-size:15px;
+    padding: 0 20px;
+  }
+
+  .foot a:hover {
+    text-decoration: underline;
+  }
+
+  .foot {
+    text-align:center;
+    position:static;
+  }
+
+  .foot ul {
+    display: table;
+    margin: 0 auto 0 auto;
+  }
+
+  .foot li {
+    list-style-type:none;
+    display:table-cell;
+    padding: 0 20px;
+  }
+
+  #links {
+    margin: 50px 0 0 0;
+  }
+
+  #links :nth-child(2) {
+    float:right;
+  }
+
+  #not-found {
+    text-align: center;
+  }
+
+  #not-found a {
+    font-family:"Old Standard TT",serif;
+    font-size: 200px;
+    text-decoration: none;
+    display: inline-block;
+    padding-top: 225px;
+  }
+
+  @media (max-width: 750px) {
+    body {
+      padding-left:20px;
+      padding-right:20px;
+    }
+
+    #nav h1 a {
+      font-size:28px;
+    }
+
+    #nav li {
+      font-size:13px;
+      padding: 0 15px;
+    }
+
+    .foot h1 a {
+      font-size:28px;
+    }
+
+    .foot li {
+      font-size:13px;
+      padding: 0 15px;
+    }
+
+    #content {
+      margin-top:0;
+      padding-top:50px;
+      font-size:14px;
+    }
+
+    #content h1 {
+      font-size:25px;
+    }
+
+    #content h2 {
+      font-size:22px;
+    }
+
+    .posts_listing li div {
+      font-size:12px;
+    }
+  }
+
+  @media (max-width: 400px) {
+    body {
+      padding-left:20px;
+      padding-right:20px;
+    }
+
+    #nav h1 a {
+      font-size:22px;
+    }
+
+    #nav li {
+      font-size:12px;
+      padding: 0 10px;
+    }
+
+    .foot h1 a {
+      font-size:22px;
+    }
+
+    .foot li {
+      font-size:12px;
+      padding: 0 10px;
+    }
+
+    #content {
+      margin-top:0;
+      padding-top:20px;
+      font-size:12px;
+    }
+
+    #content h1 {
+      font-size:20px;
+    }
+
+    #content h2 {
+      font-size:18px;
+    }
+
+    .posts_listing li div{
+      font-size:12px;
+    }
+  }
+</style>
+
+
+    
+  </head>
+
+  <body>
+    <section id=nav>
+      <h1><a href="/">mattrbianchi</a></h1>
+      <ul>
+        
+          <li><a href="/about">About</a></li>
+        
+          <li><a href="/reading">Reading</a></li>
+        
+          <li><a href="/resources">Resources</a></li>
+        
+          <li><a href="/setup">Setup</a></li>
+        
+      </ul>
+    </section>
+
+
+<section id=content>
+  <h1> Get Started With Acme </h1>
+
+  <div id=sub-header>
+    October 2016 · 5 minute read
+  </div>
+
+  <div class="entry-content">
+    
+
+<p>Now that I&rsquo;ve blabbed about how cool I think Acme is, I hope this post will help guide anyone else who is interested in trying this unique editor.</p>
+
+<h2 id="installing-acme">Installing Acme</h2>
+
+<h3 id="mac">Mac</h3>
+
+<p>Use Homebrew to install the Plan 9 tools like so: <code>brew install plan9port</code></p>
+
+<h3 id="linux">Linux</h3>
+
+<p>Honestly I found it really easy to build from source following these <a href="https://swtch.com/plan9port/man/man1/install.html">instructions.</a><br />
+I did need to install the recommended <code>xorg-dev</code> package which was also painless.</p>
+
+<h2 id="running-acme">Running Acme</h2>
+
+<p>All of these command line utilities are nicely tucked under the <code>9</code> command. This is to avoid problems with the fact that Plan 9 has it&rsquo;s own <code>ls</code> and so forth. So to run Acme with the default settings, just give your Terminal <code>9 acme</code>. An Acme window should pop up, it could be blank or it could be loaded. Go ahead and make Acme full screen or its own desktop, I like to do the latter.</p>
+
+<h2 id="the-start-of-a-beautiful-friendship">The Start of a Beautiful Friendship</h2>
+
+<p>Acme will have a window open, showing all the files and directories that exist in the location it was opened. Ahhh&hellip; soak in the rays of that beautiful, yellow and blue background goodness. Bask in the glorious shock of proportional fonts in a text editor. Yeah, you know you like it. Now it&rsquo;s time to watch the intro video, <a href="https://www.youtube.com/watch?v=dP1xVpMPn8M">A Tour of the Acme Editor</a>.</p>
+
+<p>It&rsquo;s impressive how the intro video is actually able to cover every movement in Acme. Now you should be able to start messing around in Acme and when you forget something, go back to the video. I&rsquo;ve watched it countless times because I would forget something I saw in the video before I actually had an opportunity to apply it. If you still think Acme could be your editor after this video, I&rsquo;ve got some next steps for you.</p>
+
+<h2 id="homework">Homework</h2>
+
+<p>Read the whole series that Brian Zwahr wrote on his <a href="http://echosa.github.io/blog/2014/06/18/lets-try-acme-ep-0-research/">trial of Acme</a>. It actually ends with him deciding <em>not</em> to choose Acme, which I think will be good for you to read. Reading his journey actually made it easier for me to decide that I really wanted to try Acme because I got to see his points and figure out for myself if those were deal breakers for me, too. It also told me what to look out for in Acme, which I will cover after you&rsquo;ve read the series. Now go!</p>
+
+<p>Ok, so a few things about that series. The first being his struggles with mouse chording on a trackpad. I don&rsquo;t know if his version of Acme didn&rsquo;t have this or not, but I can <code>Cut</code>, <code>Copy</code>, and <code>Paste</code> with the typical keyboard commands we Mac users have all come to love.</p>
+
+<p>That leaves one mouse chord that isn&rsquo;t possible, the 2-1 chord. This is the chord that executes whatever you have middle clicked and sends whatever you last highlighted as the argument. I currently have found only one typical need of this in my day to day and that&rsquo;s <code>git commit -m &quot;message&quot;</code> where <code>&quot;message&quot;</code> needs to be an argument in order to work, <em>for me at least</em>. So if I&rsquo;m on my laptop and writing code, <em>which is seldom nowadays</em>, I swap to a terminal for this one command and go about my work. I also made sure to buy an awesome bluetooth mouse so this situation rarely shows up for me.</p>
+
+<p>Now Brian is definitely right about Acme using the Plan 9 versions of all the command line tools. If you tell Acme to execute <code>ls</code>, it&rsquo;s using Plan 9&rsquo;s <code>ls</code>, but type something like <code>which vim</code> and you&rsquo;ll see the one originally on your mac. This is easy to see by having Acme run something like <code>which ls</code> and seeing the path direct you to the directory where Plan 9 from Userspace is installed.</p>
+
+<p>This <strong>is</strong> concerning for us peeps who don&rsquo;t know Plan 9 tools. I&rsquo;m assuming there has to be a way to point Acme to the tools we&rsquo;re more familiar with, but I haven&rsquo;t found it yet. Honestly, it hasn&rsquo;t bothered me enough. If I really need to exercise some shell-foo, I open up a Mac terminal and take full advantage of what Fish gives me there. But this is a concern and you have been warned.</p>
+
+<h2 id="one-mouse-to-rule-them-all">One Mouse to Rule Them ALL</h2>
+
+<p>You&rsquo;ve gotten this far and would still like to continue using Acme as your editor of choice, huh? Well, it&rsquo;s time to get a three button mouse. I used an old Sun Microsystems mouse for a while, but I couldn&rsquo;t function in a modern OS without a scroll wheel.</p>
+
+<p>A lot of Acme users seem to use an <a href="https://evoluent.com">Evoluent Mouse</a>, but I decided to try the Logitech MX Master mouse. While it doesn&rsquo;t actually have three buttons, the magnificant scroll wheel is huge and flat so I can click it easily. I also set the scroll to &ldquo;ratchet mode&rdquo; and turn off smooth scrolling so that the scroll wheel doesn&rsquo;t scroll the window without a distinct motion.</p>
+
+<p><em>Look, I know it sounds weird, but the other selling points for this mouse were too good. It can remember three different connections, has a horizontal scroll wheel, and a thumb button for moving between Mac workspaces. So I&rsquo;ve learned some middle clicking foo. <strong>They do say the best relationships take effort.</strong></em></p>
+
+<h2 id="carry-on-my-wayward-son">Carry On My Wayward Son</h2>
+
+<p>There it is. My current knowledge on getting started with Acme. I still intend on making at least a couple more posts, as I need to talk a lot more about some of the intermediate features of Acme and outstanding issues I have. But you should now have a great start until then. <a href="https://www.youtube.com/watch?v=2X_2IdybTV0">So carry on.</a></p>
+
+  </div>
+
+  <div id=links>
+    
+      <a class="basic-alignment left" href="http://blog.mattrbianchi.com/post/first-impressions-of-acme/">&laquo; first impressions of acme</a>
+    
+    
+      <a class="basic-alignment left" href="http://blog.mattrbianchi.com/post/how-tracking-my-skills-improved-them/">how tracking my skills improved them &raquo;</a>
+    
+  </div>
+<hr>
+</section>
+
+
+<div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+        this.page.url = "http://blog.mattrbianchi.com";
+		this.page.identifier = "get started with acme";
+    };
+
+    (function() {  
+        var d = document, s = d.createElement('script');
+        
+        s.src = '//mattrbianchi.disqus.com/embed.js';
+        
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+  
+<hr>
+	<div class="foot">
+		<ul>
+			<li>
+		<a href="http://github.com/mattrbianchi" target="_blank">
+			<img src="/mark-github.svg" alt="My GitHub Page"/>
+		</a>
+			</li>
+			<li>
+		<a href="mailto:mattrbianchi@gmail.com" target="_blank">
+			<img src="/mail.svg" alt="Send me an email"/>
+		</a>
+			</li>
+			<li>
+		<a href="http://twitter.com/mattrbianchi" target="_blank">
+			<img src="/twitter.png" alt="My Twitter Profile"/>
+		</a>
+			</li>
+		</ul>
+	</div>
+	<br/>
+</body>
+</html>
+
+
+
