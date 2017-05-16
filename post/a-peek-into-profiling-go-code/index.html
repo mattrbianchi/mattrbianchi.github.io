@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="referrer" content="no-referrer">
+    <base href="http://blog.mattrbianchi.com/">
+    
+    <title>
+      
+      
+         A Peek Into Profiling Go Code 
+      
+    </title>
+    <link href="https://fonts.googleapis.com/css?family=Merriweather:black,italic|Lato|Oxygen+Mono" rel="stylesheet"> 
+    <link rel="icon" type="image/png" href="/favicon_16x16.png" sizes="16x16">
+    <link rel="icon" type="image/png" href="/favicon_32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="/favicon_128x128.png" sizes="128x128">
+    <link rel="canonical" href="http://blog.mattrbianchi.com/post/a-peek-into-profiling-go-code/">
+    <script src="https://use.fontawesome.com/0ee02c6019.js"></script>
+
+    <style>
+  * {
+    border:0;
+	font-family: 'Lato', sans-serif;
+    font-size:100%;
+    vertical-align:baseline;
+    margin:0;
+    padding:0;
+    color: black;
+  }
+
+  body {
+    font-size:17px;
+    line-height:160%;
+    color:#1d1313;
+    max-width:700px;
+    margin:auto;
+  }
+
+  p {
+    margin: 20px 0;
+  }
+
+  a {
+	font: inherit
+  }
+
+  a img {
+    border:none;
+  }
+
+  img {
+    margin: 10px auto 10px auto;
+    max-width: 100%;
+    display: block;
+  }
+
+  pre, code {
+    font: 12px "Oxygen Mono", monospace;
+    background-color: #f7f7f7;
+  }
+
+  code {
+    font-size: 12px;
+    padding: 4px;
+  }
+
+  pre {
+    margin-top: 0;
+    margin-bottom: 16px;
+    word-wrap: normal;
+    padding: 16px;
+    overflow: auto;
+    font-size: 100%;
+    line-height: 1.45;
+  }
+
+  pre>code {
+    padding: 0;
+    margin: 0;
+    font-size: 100%;
+    word-break: normal;
+    white-space: pre;
+    background: transparent;
+    border: 0;
+  }
+
+  pre code {
+    display: inline;
+    max-width: auto;
+    padding: 0;
+    margin: 0;
+    overflow: visible;
+    line-height: inherit;
+    word-wrap: normal;
+    background-color: transparent;
+    border: 0;
+  }
+
+  pre code::before,
+  pre code::after {
+    content: normal;
+  }
+
+  em,q,em,dfn {
+    font-style:italic;
+  }
+
+  .sans,html .gist .gist-file .gist-meta {
+    font-family:"Oxygen Mono", monospace;
+  }
+
+  .mono,pre,code,tt,p code,li code {
+	font-family: "Oxygen Mono", monospace;
+  }
+
+  .heading,.serif,h1,h2,h3 {
+    font-family:"Merriweather", serif;
+  }
+
+  strong {
+    font-weight:600;
+  }
+
+  q:before {
+    content:"\201C";
+  }
+
+  q:after {
+    content:"\201D";
+  }
+
+  del,s {
+    text-decoration:line-through;
+  }
+
+  blockquote, blockquote p {
+    font-family:"Merriweather",serif;
+    text-align:center;
+    padding:30px;
+  }
+
+  blockquote p {
+    display:inline-block;
+    font-style:italic;
+  }
+
+  blockquote:before,blockquote:after {
+    font-family:"Merriweather",serif;
+    content:'\201C';
+    font-size:30px;
+    color:#403c3b;
+  }
+
+  blockquote:after {
+    content:'\201D';
+  }
+
+  hr {
+    width:40%;
+    height: 1px;
+    background:#403c3b;
+    margin: 25px auto;
+  }
+
+  h1 {
+    font-size:35px;
+  }
+
+  h2 {
+    font-size:28px;
+  }
+
+  h3 {
+    font-size:22px;
+    margin-top:18px;
+  }
+
+  h1 a,h2 a,h3 a {
+    text-decoration:none;
+  }
+
+  h1,h2 {
+    margin-top:28px;
+  }
+
+  #sub-header, time {
+    color:#403c3b;
+    font-size:13px;
+  }
+
+  #sub-header {
+    margin: 0 4px;
+  }
+
+  #nav h1 a {
+    font-size:35px;
+    color:#1d1313;
+    line-height:120%;
+  }
+
+  .posts_listing a,#nav a {
+    text-decoration: none;
+  }
+
+  .foot h1 a {
+    color:#1d1313;
+    line-height:120%;
+  }
+
+  .foot a {
+    text-decoration: none;
+  }
+
+  li {
+    margin-left: 20px;
+  }
+
+  ul li {
+    margin-left: 5px;
+  }
+
+  ul li {
+    list-style-type: none;
+  }
+  ul li:before {
+    content:"\00BB \0020";
+  }
+
+  #nav ul li:before, .posts_listing li:before {
+    content:'';
+    margin-right:0;
+  }
+
+  .foot ul li:before {
+    content:'';
+    margin-right:0;
+  }
+
+  #content {
+    text-align:left;
+    width:100%;
+    font-size:15px;
+    padding:30px 0 40px;
+  }
+
+  #content h1,#content h2 {
+    margin-bottom:5px;
+  }
+
+  #content h2 {
+    font-size:25px;
+  }
+
+  #content .entry-content {
+    margin-top:15px;
+  }
+
+  #content time {
+    margin-left:3px;
+  }
+
+  #content h1 {
+    font-size:30px;
+  }
+
+  .highlight {
+    margin: 10px 0;
+  }
+
+  .posts_listing {
+    margin:0 0 50px;
+  }
+
+  .posts_listing li {
+    margin:0 0 25px 15px;
+  }
+
+  .posts_listing li a:hover,#nav a:hover {
+    text-decoration: underline;
+  }
+
+  #nav {
+    text-align:center;
+    position:static;
+    margin-top:30px;
+  }
+
+  #nav ul {
+    display: table;
+    margin: 8px auto 0 auto;
+  }
+
+  #nav li {
+    list-style-type:none;
+    display:table-cell;
+    font-size:15px;
+    padding: 0 20px;
+  }
+
+  .foot a:hover {
+    text-decoration: underline;
+  }
+
+  .foot {
+    text-align:center;
+    position:static;
+  }
+
+  .foot ul {
+    display: table;
+    margin: 0 auto 0 auto;
+  }
+
+  .foot li {
+    list-style-type:none;
+    display:table-cell;
+    padding: 0 20px;
+  }
+
+  #links {
+    margin: 50px 0 0 0;
+  }
+
+  #links :nth-child(2) {
+    float:right;
+  }
+
+  #not-found {
+    text-align: center;
+  }
+
+  #not-found a {
+    font-family:"Merriweather",serif;
+    font-size: 200px;
+    text-decoration: none;
+    display: inline-block;
+    padding-top: 225px;
+  }
+
+  @media (max-width: 750px) {
+    body {
+      padding-left:20px;
+      padding-right:20px;
+    }
+
+    #nav h1 a {
+      font-size:28px;
+    }
+
+    #nav li {
+      font-size:13px;
+      padding: 0 15px;
+    }
+
+    .foot h1 a {
+      font-size:28px;
+    }
+
+    .foot li {
+      font-size:13px;
+      padding: 0 15px;
+    }
+
+    #content {
+      margin-top:0;
+      padding-top:50px;
+      font-size:14px;
+    }
+
+    #content h1 {
+      font-size:25px;
+    }
+
+    #content h2 {
+      font-size:22px;
+    }
+
+    .posts_listing li div {
+      font-size:12px;
+    }
+  }
+
+  @media (max-width: 400px) {
+    body {
+      padding-left:20px;
+      padding-right:20px;
+    }
+
+    #nav h1 a {
+      font-size:22px;
+    }
+
+    #nav li {
+      font-size:12px;
+      padding: 0 10px;
+    }
+
+    .foot h1 a {
+      font-size:22px;
+    }
+
+    .foot li {
+      font-size:12px;
+      padding: 0 10px;
+    }
+
+    #content {
+      margin-top:0;
+      padding-top:20px;
+      font-size:12px;
+    }
+
+    #content h1 {
+      font-size:20px;
+    }
+
+    #content h2 {
+      font-size:18px;
+    }
+
+    .posts_listing li div{
+      font-size:12px;
+    }
+  }
+</style>
+
+
+    
+  </head>
+
+  <body>
+    <section id=nav>
+      <h1><a href="/">mattrbianchi</a></h1>
+      <ul>
+        
+          <li><a href="/about">About</a></li>
+        
+          <li><a href="/reading">Reading</a></li>
+        
+          <li><a href="/resources">Resources</a></li>
+        
+          <li><a href="/setup">Setup</a></li>
+        
+      </ul>
+    </section>
+
+
+<section id=content>
+  <h1> A Peek Into Profiling Go Code </h1>
+
+  <div id=sub-header>
+    May 2017 · 7 minute read
+  </div>
+
+  <div class="entry-content">
+    
+
+<p>Some programmers consider profiling code to be some unknown magic that only wizards from <strong>A Great Age</strong> can do and only because of the years they&rsquo;ve put in to the practice. I know because I used to be one of them. That is until I learned more about two handy tools under the extremely useful <code>go</code> command.</p>
+
+<p>They make it easy for anyone to have a look under the hood of their Go code and are highly encouraged to by the community, but only when performance becomes a <strong>true</strong> concern. In fact, most performance questions I see about Go are almost always met with a &ldquo;Have you benchmarked it?&rdquo; before going any further. It&rsquo;s not to deter the questioner, it&rsquo;s just so easy in Go that there&rsquo;s no reason for it to not be done in order for a more beneficial and informative discussion to continue.</p>
+
+<p>Hopefully, the rest of this post will show you how quick it can be to profile some of your code. If your servers are on fire and you desparately need to find the problem and get some sleep, there&rsquo;s a <a href="/post/a-peek-into-profiling-go-code/#tl-dr">TL;DR</a> at the bottom. Otherwise read along so you can learn to fish instead of fill your appetite.</p>
+
+<h2 id="let-s-make-a-benchmark">Let&rsquo;s Make A Benchmark</h2>
+
+<p>This seems to usually be the barrier to entry for a lot of programmers. Coming from other languages, making benchmarks usually requires finding a library that will help make it less painful but Go&rsquo;s awesome std lib saves the day again. If you didn&rsquo;t know already, Go has an awesome <code>testing</code> package that provides all you need for testing. It&rsquo;s even more outstanding that it provides all you need for simple benchmarking!</p>
+
+<p>Just like there&rsquo;s a <code>testing.T</code>, there is a <code>testing.B</code> that contains useful functions and capabilities for making benchmarks. The most important is <code>b.N</code> because it decides how many times to run a function in order to get accurate results. See? We already don&rsquo;t have to think about a pretty complicated thing in order to have a correct enough benchmark for our needs.</p>
+
+<p>The other thing a <code>testing.B</code> gives us is the <code>b.ReportAllocs()</code> method. This will tell the <code>testing</code> package to provide allocation information in the test binary we are about to create.</p>
+
+<p>In my opinion, the simplest step to making your first benchmark is to simply take a test that tries the happy path of the function you want to benchmark and put that in a bench loop. This is assuming that good testing practices are in play so your setup and teardown methods give you an environment where you&rsquo;re comfortable with this function running many times. It should look something like this:</p>
+
+<pre><code class="language-go">package suspect_test
+
+import &quot;testing&quot;
+
+TestSuspect(b *testing.B) {
+	testSetup()
+	Suspect()
+  	// test checks!
+	testTeardown()
+}
+
+BenchmarkSuspect(b *testing.B) {
+	testSetup()
+	b.ReportAllocs()
+	for i := 0; i &lt; b.N; i++ {
+		Suspect()
+	}
+	testTeardown()
+}
+</code></pre>
+
+<p>The benchmark function is honestly the most work. From here, we get to use the awesome <code>go</code> command to interact with our benchmark.</p>
+
+<h2 id="i-wanna-go-fast">I Wanna Go Fast!</h2>
+
+<p>First, we can run our benchmark with <code>go test</code> and get an overview of the function. This output is also useful for comparing to the new output when making changes to see how much of a difference the change made to performance.</p>
+
+<p><em>We make sure to tell <code>go test</code> to not run any actual tests in order to keep our machine reasonably quiet by giving <code>-run=</code> a regexp that matches nothing.</em></p>
+
+<pre><code class="language-shell">go test -run=^$ -bench=BenchmarkSuspect | tee initialbench.txt
+BenchmarkSuspect-4	100	10652038 ns/op	3977365 B/op	16243 allocs/op
+PASS
+ok  	github.com/username/suspect/	1.092s
+</code></pre>
+
+<p>Now we have this stored in initialbench.txt and it has a lot of useful information in here we can look at. First, the <code>-4</code> after the benchmark name tells us how many cores the machine that ran the benchmark has. The next number, <code>100</code>, informs us how many times the <code>testing</code> package decided to run the benchmark (remember <code>b.N</code>?).</p>
+
+<p>While the print out is useful, this only lets us kick the tires. We need <code>go test</code> to create some files for us so we can dig deeper into the <code>Suspect</code> function. This is how we tell <code>go test</code> to create both a cpu and memory profile along with keeping the binary built to run the tests with all the information put inside it from the <code>testing</code> package:</p>
+
+<pre><code class="language-shell">go test -run=^$ -bench=BenchmarkSuspect -cpuprofile=prof.cpu -memprofile=prof.mem
+</code></pre>
+
+<h2 id="under-the-hood">Under The Hood</h2>
+
+<p>With these files, we can use <code>go tool pprof</code> to do a deep dive into what the function is actually doing. <code>pprof</code> takes the binary built by <code>go test</code> and the profile file it is given and provides a prompt where one can continue to analyze the data collected in those two files.</p>
+
+<p><em><code>suspect.test</code> is the test binary created (named after the package) and <code>-alloc_space</code> tells <code>pprof</code> to report how many allocations a function makes when doing a memory profile</em></p>
+
+<pre><code class="language-shell">go tool pprof suspect.test prof.cpu
+go tool pprof -alloc_space suspect.test prof.mem
+</code></pre>
+
+<p>This is super awesome magic land for me, but I&rsquo;ll at least give you a tour of some commands I&rsquo;ve learned and have found the most useful.</p>
+
+<p>First, there is <code>top</code>. This command lists the top ten nodes (think functions) that occupy either your cpu time or memory allocations.</p>
+
+<pre><code>(pprof) top
+293.99MB of 350.60MB total (83.85%)
+Dropped 41 nodes (cum &lt;= 1.75MB)
+Showing top 10 nodes out of 211 (cum &gt;= 18MB)
+      flat  flat%   sum%        cum   cum%
+  194.39MB 55.44% 55.44%   194.39MB 55.44%  compress/flate.NewReader
+   26.23MB  7.48% 62.92%    26.23MB  7.48%  regexp.(*bitState).reset
+   20.10MB  5.73% 68.66%    20.10MB  5.73%  bytes.makeSlice
+   15.04MB  4.29% 72.95%    15.04MB  4.29%  runtime.rawstringtmp
+    9.07MB  2.59% 75.53%     9.07MB  2.59%  reflect.unsafe_NewArray
+       8MB  2.28% 77.82%    11.01MB  3.14%  runtime.mapassign
+       ...
+</code></pre>
+
+<p>For the problem code I ran this on, it immediately shows that it&rsquo;s spending a lot of time in the <code>compress</code> package. But I didn&rsquo;t write any compression code! Hm. I need to see which one of my functions is causing this <code>flate.NewReader</code> to be called. Wouldn&rsquo;t it be nice if I could just take a glance at a nice call graph of my benchmark?</p>
+
+<p>We can do exactly that with the <code>web</code> command. Just make sure you have <code>graphviz</code> installed before you run it because <code>web</code> uses it to create an svg and then uses your system&rsquo;s browser to open it.</p>
+
+<p>From here, the boxes that use the bigger fonts to represent the function name hint that those functions are at least your &ldquo;big hitters&rdquo; — whether that be cpu or memory-wise, depending on what you told <code>pprof</code> to load.</p>
+
+<p>Now I believe you have all you need to start doing at least initial benchmarks to monitor the performance of your app throughout its lifecycle. This is a valuable asset, as it gives proper insight into what is actually causing problems instead of spending developer time speculating and rewriting innocent code.</p>
+
+<p>Obviously, if you operate at a very large scale and performance is of the utmost concern, this article can be a good starting point but there is more studying to be done for highly accurate benchmarks. That being said, I&rsquo;ve been able to keep within the bounds of this article to quickly find problem areas and make slight changes that greatly improve the UX of the programs I work with on a daily basis.</p>
+
+<h2 id="thank-you">Thank You</h2>
+
+<p>I took &ldquo;Go: Beyond the Basics&rdquo; from <a href="https://brianketelsen.com/about/">Brian Ketelson</a>, who initially showed me the <code>go</code> tool&rsquo;s profiling capabilities and I <em>believe</em> he pointed us to <a href="http://bradfitz.com/">Brad Fitzpatrick&rsquo;s</a> talk where Brad performs a live demo of this in action, which you can find <a href="https://youtu.be/xxDZuPEgbBU">here</a>. That talk not only goes over what you read here but even more of Go&rsquo;s awesome tooling, so I highly encourage you to watch it in your free time.</p>
+
+<h2 id="tl-dr">TL;DR</h2>
+
+<pre><code class="language-go">BenchmarkSuspect(b *testing.B) {
+	b.ReportAllocs()
+	// Keep all prep outside the loop for accuracy.
+	for i := 0; i &lt; b.N; i++ {
+		Suspect()
+	}
+}
+</code></pre>
+
+<pre><code class="language-shell">go test -run=^$ -bench=BenchmarkSuspect -cpuprofile=prof.cpu -memprofile=prof.mem
+</code></pre>
+
+<pre><code class="language-shell">go tool pprof suspect.test prof.cpu
+# OR
+go tool pprof -alloc_space suspect.test prof.mem
+</code></pre>
+
+<pre><code class="language-shell"># popular pprof commands
+web
+list Suspect
+top
+top --cum
+</code></pre>
+
+  </div>
+
+  <div id=links>
+    
+      <a class="basic-alignment left" href="http://blog.mattrbianchi.com/post/treat-your-brain-like-a-codebase/">&laquo; treat your brain like a codebase</a>
+    
+    
+  </div>
+<hr>
+</section>
+
+
+<div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+        this.page.url = "http://blog.mattrbianchi.com";
+		this.page.identifier = "a peek into profiling go code";
+    };
+
+    (function() {  
+        var d = document, s = d.createElement('script');
+        
+        s.src = '//mattrbianchi.disqus.com/embed.js';
+        
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+  
+<hr>
+<div class="foot">
+<ul>
+	<li>
+	<a href="http://github.com/mattrbianchi" target="_blank">
+	<i class="fa fa-github" alt="My GitHub Page"></i>
+	</a>
+	</li>
+	<li>
+	<a href="mailto:mattrbianchi@gmail.com" target="_blank">
+	<i class="fa fa-envelope" alt="Send me an email."></i>
+	</a>
+	</li>
+	<li>
+	<a href="http://twitter.com/mattrbianchi" target="_blank">
+	<i class="fa fa-twitter" alt="Check out my twitter profile."></i>
+	</a>
+	</li>
+</ul>
+</div>
+<br/>
+</body>
+</html>
+
+
+
