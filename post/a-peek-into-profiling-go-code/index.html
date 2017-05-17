@@ -501,7 +501,7 @@ BenchmarkSuspect(b *testing.B) {
 
 <h2 id="i-wanna-go-fast">I Wanna Go Fast!</h2>
 
-<p>First, we can run our benchmark with <code>go test</code> and get an overview of the function. This output is also useful for comparing to the new output when making changes to see how much of a difference the change made to performance.</p>
+<p>First, we can run our benchmark with <code>go test</code> and get an overview of the function. This output is also useful for getting a before and after to confirm that any changes made for performance actually succeeded and by how much. There&rsquo;s even a tool that understands this text and will do all that math for you, called <code>benchcmp</code>! Just run <code>go get golang.org/x/tools/cmd/benchcmp</code> to install it.</p>
 
 <p><em>We make sure to tell <code>go test</code> to not run any actual tests in order to keep our machine reasonably quiet by giving <code>-run=</code> a regexp that matches nothing.</em></p>
 
@@ -509,6 +509,18 @@ BenchmarkSuspect(b *testing.B) {
 BenchmarkSuspect-4	100	10652038 ns/op	3977365 B/op	16243 allocs/op
 PASS
 ok  	github.com/username/suspect/	1.092s
+</code></pre>
+
+<p><em>And an example of <code>benchcmp</code> in action</em></p>
+
+<pre><code>benchmark             old ns/op     new ns/op     delta
+BenchmarkSuspect-4     10652038      1315424       -87.65%
+
+benchmark             old allocs     new allocs     delta
+BenchmarkSuspect-4     16243          2978           -81.67%
+
+benchmark             old bytes     new bytes     delta
+BenchmarkSuspect-4     3977365       319078        -91.98%
 </code></pre>
 
 <p>Now we have this stored in initialbench.txt and it has a lot of useful information in here we can look at. First, the <code>-4</code> after the benchmark name tells us how many cores the machine that ran the benchmark has. The next number, <code>100</code>, informs us how many times the <code>testing</code> package decided to run the benchmark (remember <code>b.N</code>?).</p>
