@@ -550,9 +550,15 @@ Showing top 10 nodes out of 211 (cum &gt;= 18MB)
 
 <p>We can do exactly that with the <code>web</code> command. Just make sure you have <code>graphviz</code> installed before you run it because <code>web</code> uses it to create an svg and then uses your system&rsquo;s browser to open it.</p>
 
+<p><img src="hellograph.png" alt="helloworld" /></p>
+
 <p>From here, the boxes that use the bigger fonts to represent the function name hint that those functions are at least your &ldquo;big hitters&rdquo; — whether that be cpu or memory-wise, depending on what you told <code>pprof</code> to load.</p>
 
-<p>Now I believe you have all you need to start doing at least initial benchmarks to monitor the performance of your app throughout its lifecycle. This is a valuable asset, as it gives proper insight into what is actually causing problems instead of spending developer time speculating and rewriting innocent code.</p>
+<p>For instance, the above image is of a memory profile and while how many allocations my beloved hello world program makes is none of your <strong>beeswax</strong>, it seems like I&rsquo;d have to stop using <code>fmt.Println</code> to win any extreme lightweight hello world competitions. This is because it takes an empty interface, which forces Go to do some things behind the scenes in order for it to know how to print what I gave it.</p>
+
+<h2 id="otto-von-benchmark">Otto Von Benchmark</h2>
+
+<p>Now I believe you have all you need to start doing at least initial benchmarks to monitor the performance of your app throughout its lifecycle. This is a valuable asset, as it gives proper insight into what is actually causing problems instead of spending developer time speculating and rewriting innocent code. Much like Otto Von Bismark, this can prevent certain arguments between teammates and keep the peace!</p>
 
 <p>Obviously, if you operate at a very large scale and performance is of the utmost concern, this article can be a good starting point but there is more studying to be done for highly accurate benchmarks. That being said, I&rsquo;ve been able to keep within the bounds of this article to quickly find problem areas and make slight changes that greatly improve the UX of the programs I work with on a daily basis.</p>
 
