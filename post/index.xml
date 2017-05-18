@@ -53,14 +53,5 @@ I did need to install the recommended xorg-dev package which was also painless.<
 Join Me for a Nice Brew My first pleasant discovery was how easy it was to install this gem. If you&amp;rsquo;re on a Mac, it&amp;rsquo;s as easy as brew install plan9port, which actually provides you with all the tools from Plan 9, or so I&amp;rsquo;ve heard.</description>
     </item>
     
-    <item>
-      <title>go is my spirit language</title>
-      <link>http://blog.mattrbianchi.com/post/go-is-my-spirit-language/</link>
-      <pubDate>Fri, 22 Jul 2016 15:10:16 -0400</pubDate>
-      
-      <guid>http://blog.mattrbianchi.com/post/go-is-my-spirit-language/</guid>
-      <description>When I reveal my love for Go to fellow programmers, I often get inquired as to how this language could make me so passionate and exuberant. My response is usually to take a deep breath in preparation for what, in my mind, can only be an excellent delivery of my thoughts on Go. But what comes next is silence as I realize I don&amp;rsquo;t know what to lead with, followed by blurting anything that comes to mind like a rambling maniac.</description>
-    </item>
-    
   </channel>
 </rss>
