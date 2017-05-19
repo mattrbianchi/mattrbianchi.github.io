@@ -460,21 +460,21 @@
   <div class="entry-content">
     
 
-<p>Some programmers consider profiling code to be some unknown magic that only wizards from <strong>A Great Age</strong> can do and only because of the years they&rsquo;ve put in to the practice. I know because I used to be one of them. That is until I learned more about two handy tools under the extremely useful <code>go</code> command.</p>
+<p>Some programmers consider profiling code to be some unknown magic only wizards from <strong>A Great Age</strong> can do and they only can because of the years they&rsquo;ve put in to the practice. I know because I used to be one of them until I learned more about two handy tools under the extremely useful <code>go</code> command.</p>
 
-<p>They make it easy for anyone to have a look under the hood of their Go code and are highly encouraged to by the community, but only when performance becomes a <strong>true</strong> concern. In fact, most performance questions I see about Go are almost always met with a &ldquo;Have you benchmarked it?&rdquo; before going any further. It&rsquo;s not to deter the questioner, it&rsquo;s just so easy in Go that there&rsquo;s no reason for it to not be done in order for a more beneficial and informative discussion to continue.</p>
+<p>These tools make it easy for anyone to have a look under the hood of their Go code and are highly encouraged to by the community, but only when performance becomes a <strong>true</strong> concern. In fact, most performance questions I see about Go are almost always met with a &ldquo;Have you benchmarked it yet?&rdquo; before going any further. It&rsquo;s not to deter the questioner, it&rsquo;s just too easy not to. With a benchmark, a more beneficial and informative discussion to continue.</p>
 
 <p>Hopefully, the rest of this post will show you how quick it can be to profile some of your code. If your servers are on fire and you desparately need to find the problem and get some sleep, there&rsquo;s a <a href="/post/a-peek-into-profiling-go-code/#tl-dr">TL;DR</a> at the bottom. Otherwise read along so you can learn to fish instead of fill your appetite.</p>
 
 <h2 id="let-s-make-a-benchmark">Let&rsquo;s Make A Benchmark</h2>
 
-<p>This seems to usually be the barrier to entry for a lot of programmers. Coming from other languages, making benchmarks usually requires finding a library that will help make it less painful but Go&rsquo;s awesome std lib saves the day again. If you didn&rsquo;t know already, Go has an awesome <code>testing</code> package that provides all you need for testing. It&rsquo;s even more outstanding that it provides all you need for simple benchmarking!</p>
+<p>This seems to usually be the barrier to entry for a lot of programmers. Coming from other languages, making benchmarks usually requires finding a library to help make it less painful but Go&rsquo;s awesome std lib saves the day again. If you didn&rsquo;t already know, Go has an awesome <code>testing</code> package with all the functionality you need to write solid tests. What is even more outstanding is it provides all you need for simple benchmarking!</p>
 
-<p>Just like there&rsquo;s a <code>testing.T</code>, there is a <code>testing.B</code> that contains useful functions and capabilities for making benchmarks. The most important is <code>b.N</code> because it decides how many times to run a function in order to get accurate results. See? We already don&rsquo;t have to think about a pretty complicated thing in order to have a correct enough benchmark for our needs.</p>
+<p>Just like there&rsquo;s a <code>testing.T</code>, there is a <code>testing.B</code> with useful functions and capabilities for making benchmarks. The most important is <code>b.N</code> because it decides how many times to run a function in order to get accurate results. See? We already don&rsquo;t have to think about a pretty complicated thing in order to have correct enough benchmarks for our needs.</p>
 
 <p>The other thing a <code>testing.B</code> gives us is the <code>b.ReportAllocs()</code> method. This will tell the <code>testing</code> package to provide allocation information in the test binary we are about to create.</p>
 
-<p>In my opinion, the simplest step to making your first benchmark is to simply take a test that tries the happy path of the function you want to benchmark and put that in a bench loop. This is assuming that good testing practices are in play so your setup and teardown methods give you an environment where you&rsquo;re comfortable with this function running many times. It should look something like this:</p>
+<p>In my opinion, the simplest step to making your first benchmark is to simply copy a happy path test for the function you want to benchmark and make some slight adjustments to it. This is assuming good testing practices are in play so your setup and teardown methods give you an environment where you&rsquo;re comfortable with this function running many times. It should look something like this:</p>
 
 <pre><code class="language-go">package suspect_test
 
@@ -483,7 +483,7 @@ import &quot;testing&quot;
 TestSuspect(b *testing.B) {
 	testSetup()
 	Suspect()
-  	// test checks!
+  	// test assertions!
 	testTeardown()
 }
 
@@ -497,13 +497,13 @@ BenchmarkSuspect(b *testing.B) {
 }
 </code></pre>
 
-<p>The benchmark function is honestly the most work. From here, we get to use the awesome <code>go</code> command to interact with our benchmark.</p>
+<p>With a benchmark in place, we now get to use the awesome <code>go</code> command to interact with it.</p>
 
 <h2 id="i-wanna-go-fast">I Wanna Go Fast!</h2>
 
-<p>First, we can run our benchmark with <code>go test</code> and get an overview of the function. This output is also useful for getting a before and after to confirm that any changes made for performance actually succeeded and by how much. There&rsquo;s even a tool that understands this text and will do all that math for you, called <code>benchcmp</code>! Just run <code>go get golang.org/x/tools/cmd/benchcmp</code> to install it.</p>
+<p>First, we can run our benchmark with <code>go test</code> and get an overview of the function. This output is useful for getting before and after stats to confirm any changes made for performance actually succeeded and by how much. Someone even built a tool to  understand this output and do all the comparison math for you, called <code>benchcmp</code>! Just run <code>go get golang.org/x/tools/cmd/benchcmp</code> to install it.</p>
 
-<p><em>We make sure to tell <code>go test</code> to not run any actual tests in order to keep our machine reasonably quiet by giving <code>-run=</code> a regexp that matches nothing.</em></p>
+<p><em>We make sure to tell <code>go test</code> to not run any actual tests in order to keep our machine reasonably quiet by giving <code>-run=</code> a regexp matching nothing. I could have used some text that wouldn&rsquo;t match a test name like <code>NONE</code> or <code>asldghlksd</code> instead, but I like to keep those names in my back pocket&hellip; you know&hellip; just in case.</em></p>
 
 <pre><code class="language-shell">go test -run=^$ -bench=BenchmarkSuspect | tee initialbench.txt
 BenchmarkSuspect-4	100	10652038 ns/op	3977365 B/op	16243 allocs/op
@@ -523,26 +523,26 @@ benchmark             old bytes     new bytes     delta
 BenchmarkSuspect-4     3977365       319078        -91.98%
 </code></pre>
 
-<p>Now we have this stored in initialbench.txt and it has a lot of useful information in here we can look at. First, the <code>-4</code> after the benchmark name tells us how many cores the machine that ran the benchmark has. The next number, <code>100</code>, informs us how many times the <code>testing</code> package decided to run the benchmark (remember <code>b.N</code>?).</p>
+<p>Now we have this stored in initialbench.txt and it has a lot of useful information in here we can look at. First, the <code>-4</code> after the benchmark name tells us how many cores the host machine has. The next number, <code>100</code>, informs us how many times the <code>testing</code> package decided to run the benchmark (remember <code>b.N</code>?).</p>
 
-<p>While the print out is useful, this only lets us kick the tires. We need <code>go test</code> to create some files for us so we can dig deeper into the <code>Suspect</code> function. This is how we tell <code>go test</code> to create both a cpu and memory profile along with keeping the binary built to run the tests with all the information put inside it from the <code>testing</code> package:</p>
+<p>While this print out is useful, it only lets us kick the tires. We can use <code>go test</code> to create some files for us so we can dig deeper into the <code>Suspect</code> function. The command below creates both a cpu and memory profile, along with keeping the binary built to run the tests with all the information put inside it from the <code>testing</code> package:</p>
 
 <pre><code class="language-shell">go test -run=^$ -bench=BenchmarkSuspect -cpuprofile=prof.cpu -memprofile=prof.mem
 </code></pre>
 
 <h2 id="under-the-hood">Under The Hood</h2>
 
-<p>With these files, we can use <code>go tool pprof</code> to do a deep dive into what the function is actually doing. <code>pprof</code> takes the binary built by <code>go test</code> and the profile file it is given and provides a prompt where one can continue to analyze the data collected in those two files.</p>
+<p>With these files, we can use <code>go tool pprof</code> to do a deep dive into what the function is actually doing. <code>pprof</code> takes the binary built by <code>go test</code> and the profile information it is given and provides a prompt where one can continue to analyze the data collected in those two files.</p>
 
-<p><em><code>suspect.test</code> is the test binary created (named after the package) and <code>-alloc_space</code> tells <code>pprof</code> to report how many allocations a function makes when doing a memory profile</em></p>
+<p><em><code>suspect.test</code> is the test binary created (named after the package) and <code>-alloc_space</code> tells <code>pprof</code> to report how many allocations any code makes</em></p>
 
 <pre><code class="language-shell">go tool pprof suspect.test prof.cpu
 go tool pprof -alloc_space suspect.test prof.mem
 </code></pre>
 
-<p>This is super awesome magic land for me, but I&rsquo;ll at least give you a tour of some commands I&rsquo;ve learned and have found the most useful.</p>
+<p>We&rsquo;re officially in Super Awesome Magic Land for me, but I&rsquo;ll give you a tour of the commands I&rsquo;ve learned and have found the most useful.</p>
 
-<p>First, there is <code>top</code>. This command lists the top ten nodes (think functions) that occupy either your cpu time or memory allocations.</p>
+<p>First, there is <code>top</code>. This command lists the top ten nodes (think functions) occupying either your cpu time or memory allocations.</p>
 
 <pre><code>(pprof) top
 293.99MB of 350.60MB total (83.85%)
@@ -558,25 +558,27 @@ Showing top 10 nodes out of 211 (cum &gt;= 18MB)
        ...
 </code></pre>
 
-<p>For the problem code I ran this on, it immediately shows that it&rsquo;s spending a lot of time in the <code>compress</code> package. But I didn&rsquo;t write any compression code! Hm. I need to see which one of my functions is causing this <code>flate.NewReader</code> to be called. Wouldn&rsquo;t it be nice if I could just take a glance at a nice call graph of my benchmark?</p>
+<p>For the problem code I ran this on, it says a lot of the allocations are in the <code>compress</code> package. But I didn&rsquo;t write any compression code! Hm. I need to see which one of my functions is causing this <code>flate.NewReader</code> to be called. Wouldn&rsquo;t it be nice if I could just take a glance at a nice call graph of my benchmark?</p>
 
-<p>We can do exactly that with the <code>web</code> command. Just make sure you have <code>graphviz</code> installed before you run it because <code>web</code> uses it to create an svg and then uses your system&rsquo;s browser to open it.</p>
+<p>We can do exactly that with the <code>web</code> command:</p>
+
+<p><em>Just make sure you have <code>graphviz</code> installed before you run it because <code>web</code> uses it to create an svg and then uses your system&rsquo;s browser to open it.</em></p>
 
 <p><img src="hellograph.png" alt="helloworld" /></p>
 
-<p>From here, the boxes that use the bigger fonts to represent the function name hint that those functions are at least your &ldquo;big hitters&rdquo; — whether that be cpu or memory-wise, depending on what you told <code>pprof</code> to load.</p>
+<p>From here, the boxes with bigger fonts to represent the function name hint that those functions are your &ldquo;heavy hitters&rdquo; — this could be cpu or memory-wise, depending on what you told <code>pprof</code> to load.</p>
 
-<p>For instance, the above image is of a memory profile and while how many allocations my beloved hello world program makes is none of your <strong>beeswax</strong>, it seems like I&rsquo;d have to stop using <code>fmt.Println</code> to win any extreme lightweight hello world competitions. This is because it takes an empty interface, which forces Go to do some things behind the scenes in order for it to know how to print what I gave it.</p>
+<p>For instance, the above image is of a memory profile and while how many allocations my beloved hello world program makes is none of your <strong>beeswax</strong>, it seems like I&rsquo;d have to stop using <code>fmt.Println</code> to win any extreme hello world hackathons. <em>This is because it takes an empty interface, which forces Go to do some things behind the scenes in order for it to know how to print what I gave it.</em></p>
 
 <h2 id="otto-von-benchmark">Otto Von Benchmark</h2>
 
-<p>Now I believe you have all you need to start doing at least initial benchmarks to monitor the performance of your app throughout its lifecycle. This is a valuable asset, as it gives proper insight into what is actually causing problems instead of spending developer time speculating and rewriting innocent code. Much like Otto Von Bismark, this can prevent certain arguments between teammates and keep the peace!</p>
+<p>Now I believe you have all you need to start writing some initial benchmarks to monitor the performance of your app throughout its lifecycle. This is a valuable asset, as it gives proper insight into what is actually causing problems instead of spending developer time speculating and rewriting innocent code. Not only will this save the company money, but can prevent arguments between teammates and keep the peace!</p>
 
-<p>Obviously, if you operate at a very large scale and performance is of the utmost concern, this article can be a good starting point but there is more studying to be done for highly accurate benchmarks. That being said, I&rsquo;ve been able to keep within the bounds of this article to quickly find problem areas and make slight changes that greatly improve the UX of the programs I work with on a daily basis.</p>
+<p>Obviously, if you operate at a very large scale and performance is of the utmost concern, there is more studying to be done for highly accurate benchmarks. That being said, I&rsquo;ve been able to keep within the bounds of this article to quickly find problem areas in code and smooth them over in order to improve UX when needed.</p>
 
 <h2 id="thank-you">Thank You</h2>
 
-<p>I took &ldquo;Go: Beyond the Basics&rdquo; from <a href="https://brianketelsen.com/about/">Brian Ketelsen</a>, who initially showed me the <code>go</code> tool&rsquo;s profiling capabilities and I <em>believe</em> he pointed us to <a href="http://bradfitz.com/">Brad Fitzpatrick&rsquo;s</a> talk where Brad performs a live demo of this in action, which you can find <a href="https://youtu.be/xxDZuPEgbBU">here</a>. That talk not only goes over what you read here but even more of Go&rsquo;s awesome tooling, so I highly encourage you to watch it in your free time.</p>
+<p>I took &ldquo;Go: Beyond the Basics&rdquo; from <a href="https://brianketelsen.com/about/">Brian Ketelsen</a>, who initially showed me the <code>go</code> tool&rsquo;s profiling capabilities and I <em>believe</em> he pointed us to <a href="http://bradfitz.com/">Brad Fitzpatrick&rsquo;s</a> talk where Brad performs a live demo of a lot of this in action, which you can find <a href="https://youtu.be/xxDZuPEgbBU">here</a>. Brad&rsquo;s demo includes even more of Go&rsquo;s awesome tooling like the race detector, so I highly encourage you to watch it in your free time.</p>
 
 <h2 id="tl-dr">TL;DR</h2>
 
