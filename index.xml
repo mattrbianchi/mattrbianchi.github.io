@@ -1,106 +1,318 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>mattrbianchi</title>
+    <title>mattrbianchi on mattrbianchi</title>
     <link>http://blog.mattrbianchi.com/</link>
-    <description>Recent content on mattrbianchi</description>
+    <description>Recent content in mattrbianchi on mattrbianchi</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 16 May 2017 08:01:30 -0400</lastBuildDate>
-    
-	<atom:link href="http://blog.mattrbianchi.com/index.xml" rel="self" type="application/rss+xml" />
-    
+    <copyright>&amp;copy; 2017 Matthew Bianchi</copyright>
+    <lastBuildDate>Mon, 20 Mar 2017 22:13:31 -0400</lastBuildDate>
+    <atom:link href="/" rel="self" type="application/rss+xml" />
     
     <item>
-      <title>a peek into profiling go code</title>
+      <title>A Peek Into Profiling Go Code</title>
       <link>http://blog.mattrbianchi.com/post/a-peek-into-profiling-go-code/</link>
-      <pubDate>Tue, 16 May 2017 08:01:30 -0400</pubDate>
+      <pubDate>Tue, 16 May 2017 08:01:30 +0000</pubDate>
       
       <guid>http://blog.mattrbianchi.com/post/a-peek-into-profiling-go-code/</guid>
-      <description>Some programmers consider profiling code to be some unknown magic only wizards from A Great Age can do and they only can because of the years they&amp;rsquo;ve put in to the practice. I know because I used to be one of them until I learned more about two handy tools under the extremely useful go command.
-These tools make it easy for anyone to have a look under the hood of their Go code and are highly encouraged to by the community, but only when performance becomes a true concern.</description>
+      <description>
+
+&lt;p&gt;Some programmers consider profiling code to be some unknown magic only wizards from &lt;strong&gt;A Great Age&lt;/strong&gt; can do and they only can because of the years they&amp;rsquo;ve put in to the practice. I know because I used to be one of them until I learned more about two handy tools under the extremely useful &lt;code&gt;go&lt;/code&gt; command.&lt;/p&gt;
+
+&lt;p&gt;These tools make it easy for anyone to have a look under the hood of their Go code and are highly encouraged to by the community, but only when performance becomes a &lt;strong&gt;true&lt;/strong&gt; concern. In fact, most performance questions I see about Go are almost always met with a &amp;ldquo;Have you benchmarked it yet?&amp;rdquo; before going any further. It&amp;rsquo;s not to deter the questioner, it&amp;rsquo;s just too easy not to. With a benchmark, a more beneficial and informative discussion to continue.&lt;/p&gt;
+
+&lt;p&gt;Hopefully, the rest of this post will show you how quick it can be to profile some of your code. If your servers are on fire and you desparately need to find the problem and get some sleep, there&amp;rsquo;s a &lt;a href=&#34;http://blog.mattrbianchi.com/post/a-peek-into-profiling-go-code/#tl-dr&#34;&gt;TL;DR&lt;/a&gt; at the bottom. Otherwise read along so you can learn to fish instead of fill your appetite.&lt;/p&gt;
+
+&lt;h2 id=&#34;let-s-make-a-benchmark&#34;&gt;Let&amp;rsquo;s Make A Benchmark&lt;/h2&gt;
+
+&lt;p&gt;This seems to usually be the barrier to entry for a lot of programmers. Coming from other languages, making benchmarks usually requires finding a library to help make it less painful but Go&amp;rsquo;s awesome std lib saves the day again. If you didn&amp;rsquo;t already know, Go has an awesome &lt;code&gt;testing&lt;/code&gt; package with all the functionality you need to write solid tests. What is even more outstanding is it provides all you need for simple benchmarking!&lt;/p&gt;
+
+&lt;p&gt;Just like there&amp;rsquo;s a &lt;code&gt;testing.T&lt;/code&gt;, there is a &lt;code&gt;testing.B&lt;/code&gt; with useful functions and capabilities for making benchmarks. The most important is &lt;code&gt;b.N&lt;/code&gt; because it decides how many times to run a function in order to get accurate results. See? We already don&amp;rsquo;t have to think about a pretty complicated thing in order to have correct enough benchmarks for our needs.&lt;/p&gt;
+
+&lt;p&gt;The other thing a &lt;code&gt;testing.B&lt;/code&gt; gives us is the &lt;code&gt;b.ReportAllocs()&lt;/code&gt; method. This will tell the &lt;code&gt;testing&lt;/code&gt; package to provide allocation information in the test binary we are about to create.&lt;/p&gt;
+
+&lt;p&gt;In my opinion, the simplest step to making your first benchmark is to simply copy a happy path test for the function you want to benchmark and make some slight adjustments to it. This is assuming good testing practices are in play so your setup and teardown methods give you an environment where you&amp;rsquo;re comfortable with this function running many times. It should look something like this:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-go&#34;&gt;package suspect_test
+
+import &amp;quot;testing&amp;quot;
+
+TestSuspect(b *testing.B) {
+	testSetup()
+	Suspect()
+  	// test assertions!
+	testTeardown()
+}
+
+BenchmarkSuspect(b *testing.B) {
+	testSetup()
+	b.ReportAllocs()
+	for i := 0; i &amp;lt; b.N; i++ {
+		Suspect()
+	}
+	testTeardown()
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;With a benchmark in place, we now get to use the awesome &lt;code&gt;go&lt;/code&gt; command to interact with it.&lt;/p&gt;
+
+&lt;h2 id=&#34;i-wanna-go-fast&#34;&gt;I Wanna Go Fast!&lt;/h2&gt;
+
+&lt;p&gt;First, we can run our benchmark with &lt;code&gt;go test&lt;/code&gt; and get an overview of the function. This output is useful for getting before and after stats to confirm any changes made for performance actually succeeded and by how much. Someone even built a tool to  understand this output and do all the comparison math for you, called &lt;code&gt;benchcmp&lt;/code&gt;! Just run &lt;code&gt;go get golang.org/x/tools/cmd/benchcmp&lt;/code&gt; to install it.&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;We make sure to tell &lt;code&gt;go test&lt;/code&gt; to not run any actual tests in order to keep our machine reasonably quiet by giving &lt;code&gt;-run=&lt;/code&gt; a regexp matching nothing. I could have used some text that wouldn&amp;rsquo;t match a test name like &lt;code&gt;NONE&lt;/code&gt; or &lt;code&gt;asldghlksd&lt;/code&gt; instead, but I like to keep those names in my back pocket&amp;hellip; you know&amp;hellip; just in case.&lt;/em&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;go test -run=^$ -bench=BenchmarkSuspect | tee initialbench.txt
+BenchmarkSuspect-4	100	10652038 ns/op	3977365 B/op	16243 allocs/op
+PASS
+ok  	github.com/username/suspect/	1.092s
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;em&gt;And an example of &lt;code&gt;benchcmp&lt;/code&gt; in action&lt;/em&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;benchmark             old ns/op     new ns/op     delta
+BenchmarkSuspect-4     10652038      1315424       -87.65%
+
+benchmark             old allocs     new allocs     delta
+BenchmarkSuspect-4     16243          2978           -81.67%
+
+benchmark             old bytes     new bytes     delta
+BenchmarkSuspect-4     3977365       319078        -91.98%
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Now we have this stored in initialbench.txt and it has a lot of useful information in here we can look at. First, the &lt;code&gt;-4&lt;/code&gt; after the benchmark name tells us how many cores the host machine has. The next number, &lt;code&gt;100&lt;/code&gt;, informs us how many times the &lt;code&gt;testing&lt;/code&gt; package decided to run the benchmark (remember &lt;code&gt;b.N&lt;/code&gt;?).&lt;/p&gt;
+
+&lt;p&gt;While this print out is useful, it only lets us kick the tires. We can use &lt;code&gt;go test&lt;/code&gt; to create some files for us so we can dig deeper into the &lt;code&gt;Suspect&lt;/code&gt; function. The command below creates both a cpu and memory profile, along with keeping the binary built to run the tests with all the information put inside it from the &lt;code&gt;testing&lt;/code&gt; package:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;go test -run=^$ -bench=BenchmarkSuspect -cpuprofile=prof.cpu -memprofile=prof.mem
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;under-the-hood&#34;&gt;Under The Hood&lt;/h2&gt;
+
+&lt;p&gt;With these files, we can use &lt;code&gt;go tool pprof&lt;/code&gt; to do a deep dive into what the function is actually doing. &lt;code&gt;pprof&lt;/code&gt; takes the binary built by &lt;code&gt;go test&lt;/code&gt; and the profile information it is given and provides a prompt where one can continue to analyze the data collected in those two files.&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;&lt;code&gt;suspect.test&lt;/code&gt; is the test binary created (named after the package) and &lt;code&gt;-alloc_space&lt;/code&gt; tells &lt;code&gt;pprof&lt;/code&gt; to report how many allocations any code makes&lt;/em&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;go tool pprof suspect.test prof.cpu
+go tool pprof -alloc_space suspect.test prof.mem
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;We&amp;rsquo;re officially in Super Awesome Magic Land for me, but I&amp;rsquo;ll give you a tour of the commands I&amp;rsquo;ve learned and have found the most useful.&lt;/p&gt;
+
+&lt;p&gt;First, there is &lt;code&gt;top&lt;/code&gt;. This command lists the top ten nodes (think functions) occupying either your cpu time or memory allocations.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;(pprof) top
+293.99MB of 350.60MB total (83.85%)
+Dropped 41 nodes (cum &amp;lt;= 1.75MB)
+Showing top 10 nodes out of 211 (cum &amp;gt;= 18MB)
+      flat  flat%   sum%        cum   cum%
+  194.39MB 55.44% 55.44%   194.39MB 55.44%  compress/flate.NewReader
+   26.23MB  7.48% 62.92%    26.23MB  7.48%  regexp.(*bitState).reset
+   20.10MB  5.73% 68.66%    20.10MB  5.73%  bytes.makeSlice
+   15.04MB  4.29% 72.95%    15.04MB  4.29%  runtime.rawstringtmp
+    9.07MB  2.59% 75.53%     9.07MB  2.59%  reflect.unsafe_NewArray
+       8MB  2.28% 77.82%    11.01MB  3.14%  runtime.mapassign
+       ...
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;For the problem code I ran this on, it says a lot of the allocations are in the &lt;code&gt;compress&lt;/code&gt; package. But I didn&amp;rsquo;t write any compression code! Hm. I need to see which one of my functions is causing this &lt;code&gt;flate.NewReader&lt;/code&gt; to be called. Wouldn&amp;rsquo;t it be nice if I could just take a glance at a nice call graph of my benchmark?&lt;/p&gt;
+
+&lt;p&gt;We can do exactly that with the &lt;code&gt;web&lt;/code&gt; command:&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;Just make sure you have &lt;code&gt;graphviz&lt;/code&gt; installed before you run it because &lt;code&gt;web&lt;/code&gt; uses it to create an svg and then uses your system&amp;rsquo;s browser to open it.&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://blog.mattrbianchi.com/static/img/hellograph.png&#34; alt=&#34;helloworld&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;From here, the boxes with bigger fonts to represent the function name hint that those functions are your &amp;ldquo;heavy hitters&amp;rdquo; — this could be cpu or memory-wise, depending on what you told &lt;code&gt;pprof&lt;/code&gt; to load.&lt;/p&gt;
+
+&lt;p&gt;For instance, the above image is of a memory profile and while how many allocations my beloved hello world program makes is none of your &lt;strong&gt;beeswax&lt;/strong&gt;, it seems like I&amp;rsquo;d have to stop using &lt;code&gt;fmt.Println&lt;/code&gt; to win any extreme hello world hackathons. &lt;em&gt;This is because it takes an empty interface, which forces Go to do some things behind the scenes in order for it to know how to print what I gave it.&lt;/em&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;otto-von-benchmark&#34;&gt;Otto Von Benchmark&lt;/h2&gt;
+
+&lt;p&gt;Now I believe you have all you need to start writing some initial benchmarks to monitor the performance of your app throughout its lifecycle. This is a valuable asset, as it gives proper insight into what is actually causing problems instead of spending developer time speculating and rewriting innocent code. Not only will this save the company money, but can prevent arguments between teammates and keep the peace!&lt;/p&gt;
+
+&lt;p&gt;Obviously, if you operate at a very large scale and performance is of the utmost concern, there is more studying to be done for highly accurate benchmarks. That being said, I&amp;rsquo;ve been able to keep within the bounds of this article to quickly find problem areas in code and smooth them over in order to improve UX when needed.&lt;/p&gt;
+
+&lt;h2 id=&#34;thank-you&#34;&gt;Thank You&lt;/h2&gt;
+
+&lt;p&gt;I took &amp;ldquo;Go: Beyond the Basics&amp;rdquo; from &lt;a href=&#34;https://brianketelsen.com/about/&#34;&gt;Brian Ketelsen&lt;/a&gt;, who initially showed me the &lt;code&gt;go&lt;/code&gt; tool&amp;rsquo;s profiling capabilities and I &lt;em&gt;believe&lt;/em&gt; he pointed us to &lt;a href=&#34;http://bradfitz.com/&#34;&gt;Brad Fitzpatrick&amp;rsquo;s&lt;/a&gt; talk where Brad performs a live demo of a lot of this in action, which you can find &lt;a href=&#34;https://youtu.be/xxDZuPEgbBU&#34;&gt;here&lt;/a&gt;. Brad&amp;rsquo;s demo includes even more of Go&amp;rsquo;s awesome tooling like the race detector, so I highly encourage you to watch it in your free time.&lt;/p&gt;
+
+&lt;h2 id=&#34;tl-dr&#34;&gt;TL;DR&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-go&#34;&gt;BenchmarkSuspect(b *testing.B) {
+	b.ReportAllocs()
+	// Keep all prep outside the loop for accuracy.
+	for i := 0; i &amp;lt; b.N; i++ {
+		Suspect()
+	}
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;go test -run=^$ -bench=BenchmarkSuspect -cpuprofile=prof.cpu -memprofile=prof.mem
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;go tool pprof suspect.test prof.cpu
+# OR
+go tool pprof -alloc_space suspect.test prof.mem
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;# popular pprof commands
+web
+list Suspect
+top
+top --cum
+&lt;/code&gt;&lt;/pre&gt;
+</description>
     </item>
     
     <item>
-      <title>reading</title>
-      <link>http://blog.mattrbianchi.com/reading/</link>
-      <pubDate>Mon, 20 Mar 2017 22:14:10 -0400</pubDate>
-      
-      <guid>http://blog.mattrbianchi.com/reading/</guid>
-      <description>I love getting professional opinions on books. Especially with technical books because they are time consuming to read and I want to get the most benefit from my time. That&amp;rsquo;s why I&amp;rsquo;m making this list to contribute my reviews so that other people can use them to make decisions on what to read to progress their own careers.
-Table of Contents Books for All Developers
-Learning About the Community</description>
-    </item>
-    
-    <item>
-      <title>setup</title>
-      <link>http://blog.mattrbianchi.com/setup/</link>
-      <pubDate>Mon, 20 Mar 2017 22:14:00 -0400</pubDate>
-      
-      <guid>http://blog.mattrbianchi.com/setup/</guid>
-      <description>One thing I always try to search for after finding a really useful personal blog is a listing of the tools that person uses. Because if they have really good advice, they might use really good tools. Might. So in case someone (literally probably one person) wants to know the tools I use, here they are.
-Hardware Laptop
- Macbook Pro 13&amp;rdquo; Retina display  Desktop
- Custom Build (simple) running Fedora 25 with Gnome desktop CODE keyboard (blue switches) Evoluent Vertical Mouse 4 Right (wired)  Work</description>
-    </item>
-    
-    <item>
-      <title>resources</title>
-      <link>http://blog.mattrbianchi.com/resources/</link>
-      <pubDate>Mon, 20 Mar 2017 22:13:53 -0400</pubDate>
-      
-      <guid>http://blog.mattrbianchi.com/resources/</guid>
-      <description>A page of resources that I&amp;rsquo;ve found useful and want to keep forever, but don&amp;rsquo;t want clogging my bookmarks.
-Developer Advice
-Best Programming Advice I Ever Got
-Seven Pillars of Pretty Code
-Tenants of the Unix Philosophy
-What ORMs have taught me: just learn SQL
-HARMFUL GOTOS, PREMATURE OPTIMIZATIONS, AND PROGRAMMING MYTHS ARE THE ROOT OF ALL EVIL
-Don&amp;rsquo;t Call Yourself A Programmer, And Other Advice
-The Ultimate Code Kata</description>
-    </item>
-    
-    <item>
-      <title>about</title>
-      <link>http://blog.mattrbianchi.com/about/</link>
-      <pubDate>Mon, 20 Mar 2017 22:13:31 -0400</pubDate>
-      
-      <guid>http://blog.mattrbianchi.com/about/</guid>
-      <description>Programmer, husband, recent Acme user, and now blogger.
-I enjoy the great outdoors and the awesome tech community that New England has to offer. I also can&amp;rsquo;t turn down a good cup of coffee and love discussions around programming.</description>
-    </item>
-    
-    <item>
-      <title>treat your brain like a codebase</title>
+      <title>Treat Your Brain Like A Codebase</title>
       <link>http://blog.mattrbianchi.com/post/treat-your-brain-like-a-codebase/</link>
-      <pubDate>Tue, 24 Jan 2017 07:01:50 -0400</pubDate>
+      <pubDate>Tue, 24 Jan 2017 07:01:50 +0000</pubDate>
       
       <guid>http://blog.mattrbianchi.com/post/treat-your-brain-like-a-codebase/</guid>
-      <description>This post stems from me finding this conference talk. It would be best for you to watch it first and then come back, but don&amp;rsquo;t worry &amp;ndash; it&amp;rsquo;s pretty funny and really enlightening.
-Death By a Thousand Cuts Now, after watching that talk, I realized that ever since I started to learn how to program, I was dying the death of a thousand micro-leaks because there was so much I didn&amp;rsquo;t know.</description>
+      <description>
+
+&lt;p&gt;This post stems from me finding this &lt;a href=&#34;https://youtu.be/FKTxC9pl-WM?list=PL3NQHgGj2vtuWPOxUMGwvRuEB0KVg-UXT&#34;&gt;conference talk&lt;/a&gt;. It would be best for you to watch it first and then come back, but don&amp;rsquo;t worry &amp;ndash; it&amp;rsquo;s pretty funny and really enlightening.&lt;/p&gt;
+
+&lt;h3 id=&#34;death-by-a-thousand-cuts&#34;&gt;Death By a Thousand Cuts&lt;/h3&gt;
+
+&lt;p&gt;Now, after watching that talk, I realized that ever since I started to learn how to program, I was dying the death of a thousand micro-leaks because there was so much I didn&amp;rsquo;t know. We&amp;rsquo;ve all been in that boat before: &amp;ldquo;Well, real programmers use the terminal.&amp;rdquo; So I do my best to learn the terminal, while trying to learn how to code &lt;em&gt;and&lt;/em&gt; learn the concepts of computer architecture &lt;em&gt;and&lt;/em&gt; keep up with engineering physics &lt;em&gt;and&amp;hellip;&lt;/em&gt; You get my point.&lt;/p&gt;
+
+&lt;p&gt;From this fire hose I did manage to learn little things like ls, cd, etc. And of course I learned the material in my classes. But I was nowhere near mastering a terminal. &lt;em&gt;I was piling up on B&lt;/em&gt;. And I was in double trouble because I was so concerned with everything I didn&amp;rsquo;t know that the things I thought I &lt;em&gt;did&lt;/em&gt; know ended up in the Half-assed on C category. So I know what you&amp;rsquo;re thinking: &amp;ldquo;OK, I get it&amp;hellip; you&amp;rsquo;re an idiot. What did you do about it?&amp;rdquo; Please, read on.&lt;/p&gt;
+
+&lt;h3 id=&#34;real-programmers-use&#34;&gt;Real Programmers Use&amp;hellip;&lt;/h3&gt;
+
+&lt;p&gt;As a programmer, we get pulled all kinds of different ways with what we should or shouldn&amp;rsquo;t know. So the first task that Kathy issues us with is pulling stuff off B. The odd jobs I worked in college pulled me through C#/.NET, JavaScript, HTML, CSS, iOS in Objective-C, and Android in Java all while doing my studies. Now that I think about it, I probably wasn&amp;rsquo;t even working in the B category in most of those technologies.&lt;/p&gt;
+
+&lt;p&gt;To top it off, I&amp;rsquo;m one of those people who have the bad habit of seeing everything as a challenge and so the Real programmers use &lt;strong&gt;X&lt;/strong&gt; statements really got to me:&lt;br /&gt;
+Real programmers use &lt;strong&gt;vim&lt;/strong&gt;&lt;br /&gt;
+Real programmers use the &lt;strong&gt;terminal&lt;/strong&gt;&lt;br /&gt;
+Real programmers use a *nix &lt;strong&gt;environment&lt;/strong&gt;&lt;br /&gt;
+It&amp;rsquo;s funny that Kathy refers to compensating with food because that&amp;rsquo;s exactly what I did during this time.&lt;/p&gt;
+
+&lt;h3 id=&#34;nail-in-the-coffin&#34;&gt;Nail in the Coffin&lt;/h3&gt;
+
+&lt;p&gt;My last semester was the most rewarding in my undergrad, but it really brought to light that I was just spinning my wheels. One class was using F#, the other Python and Java, we decided on Rails for our senior design project (I would also end up the sole developer of the iOS app, where I lost a lot of sleep learning the new Swift language because that&amp;rsquo;s what real iOS programmers went to), and we were goaded by another &amp;ldquo;Real programmers use &lt;strong&gt;LaTeX&lt;/strong&gt; to write documentation&amp;rdquo; snark so, by God, our senior project documentation would be an immaculate PDF written in LaTeX. None of this actually improved my skills as a developer, I just ended up knowing where to put the colons and semi-colons in up-teen different languages and I was completely burnt out from not ever getting productive with any of them.&lt;/p&gt;
+
+&lt;h3 id=&#34;your-brain-is-a-codebase&#34;&gt;Your Brain is a Codebase&lt;/h3&gt;
+
+&lt;p&gt;Kathy made me realize that I could look at improving my skills like improving a codebase. What do you do when you realize your software doesn&amp;rsquo;t have a feature the client (you, in this case) needs? It gets put on the backlog in order of priority. Upon this eureka moment, I made a Trello board named Skills with columns Can&amp;rsquo;t Do, Learning, and Mastered. My git skills sucked, so that went to the top of the Can&amp;rsquo;t Do column in my new Trello board. Then I could track what I didn&amp;rsquo;t know and work on it after I was done bringing a current skill (think task) to the Mastered column &amp;ndash; effectively closing it out. This continues to work well when you realize that a previous feature of yourself has a bug in it! Just make an issue and take care of it.&lt;/p&gt;
+
+&lt;p&gt;This has brought my productivity and capability to another level, where I am finally comfortable with git, the shell, and Acme. I also decided to concentrate all my efforts into my favorite programming language, Go, which has earned me the privilege of using it full time at work. And finally, to fix my Half-assed on C skills, I&amp;rsquo;m going back to school for my masters through the OMSCS program at Georgia Tech. With a proficient knowledge of my core tools: the shell, git, Go, and Acme, I plan to keep my focus strictly on my academic sabbatical, where I can bring the concepts of computer science I left on B to C.&lt;/p&gt;
+</description>
     </item>
     
     <item>
-      <title>get started with acme</title>
+      <title>Get Started With Acme</title>
       <link>http://blog.mattrbianchi.com/post/get-started-with-acme/</link>
-      <pubDate>Thu, 20 Oct 2016 15:36:17 -0400</pubDate>
+      <pubDate>Thu, 20 Oct 2016 15:36:17 +0000</pubDate>
       
       <guid>http://blog.mattrbianchi.com/post/get-started-with-acme/</guid>
-      <description>Now that I&amp;rsquo;ve blabbed about how cool I think Acme is, I hope this post will help guide anyone else who is interested in trying this unique editor.
-Installing Acme Mac Use Homebrew to install the Plan 9 tools like so: brew install plan9port
-Linux Honestly I found it really easy to build from source following these instructions.
-I did need to install the recommended xorg-dev package which was also painless.</description>
+      <description>
+
+&lt;p&gt;Now that I&amp;rsquo;ve blabbed about how cool I think Acme is, I hope this post will help guide anyone else who is interested in trying this unique editor.&lt;/p&gt;
+
+&lt;h2 id=&#34;installing-acme&#34;&gt;Installing Acme&lt;/h2&gt;
+
+&lt;h3 id=&#34;mac&#34;&gt;Mac&lt;/h3&gt;
+
+&lt;p&gt;Use Homebrew to install the Plan 9 tools like so: &lt;code&gt;brew install plan9port&lt;/code&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;linux&#34;&gt;Linux&lt;/h3&gt;
+
+&lt;p&gt;Honestly I found it really easy to build from source following these &lt;a href=&#34;https://swtch.com/plan9port/man/man1/install.html&#34;&gt;instructions.&lt;/a&gt;&lt;br /&gt;
+I did need to install the recommended &lt;code&gt;xorg-dev&lt;/code&gt; package which was also painless.&lt;/p&gt;
+
+&lt;h2 id=&#34;running-acme&#34;&gt;Running Acme&lt;/h2&gt;
+
+&lt;p&gt;All of these command line utilities are nicely tucked under the &lt;code&gt;9&lt;/code&gt; command. This is to avoid problems with the fact that Plan 9 has it&amp;rsquo;s own &lt;code&gt;ls&lt;/code&gt; and so forth. So to run Acme with the default settings, just give your Terminal &lt;code&gt;9 acme&lt;/code&gt;. An Acme window should pop up, it could be blank or it could be loaded. Go ahead and make Acme full screen or its own desktop, I like to do the latter.&lt;/p&gt;
+
+&lt;h2 id=&#34;the-start-of-a-beautiful-friendship&#34;&gt;The Start of a Beautiful Friendship&lt;/h2&gt;
+
+&lt;p&gt;Acme will have a window open, showing all the files and directories that exist in the location it was opened. Ahhh&amp;hellip; soak in the rays of that beautiful, yellow and blue background goodness. Bask in the glorious shock of proportional fonts in a text editor. Yeah, you know you like it. Now it&amp;rsquo;s time to watch the intro video, &lt;a href=&#34;https://www.youtube.com/watch?v=dP1xVpMPn8M&#34;&gt;A Tour of the Acme Editor&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;It&amp;rsquo;s impressive how the intro video is actually able to cover every movement in Acme. Now you should be able to start messing around in Acme and when you forget something, go back to the video. I&amp;rsquo;ve watched it countless times because I would forget something I saw in the video before I actually had an opportunity to apply it. If you still think Acme could be your editor after this video, I&amp;rsquo;ve got some next steps for you.&lt;/p&gt;
+
+&lt;h2 id=&#34;homework&#34;&gt;Homework&lt;/h2&gt;
+
+&lt;p&gt;Read the whole series that Brian Zwahr wrote on his &lt;a href=&#34;http://echosa.github.io/blog/2014/06/18/lets-try-acme-ep-0-research/&#34;&gt;trial of Acme&lt;/a&gt;. It actually ends with him deciding &lt;em&gt;not&lt;/em&gt; to choose Acme, which I think will be good for you to read. Reading his journey actually made it easier for me to decide that I really wanted to try Acme because I got to see his points and figure out for myself if those were deal breakers for me, too. It also told me what to look out for in Acme, which I will cover after you&amp;rsquo;ve read the series. Now go!&lt;/p&gt;
+
+&lt;p&gt;Ok, so a few things about that series. The first being his struggles with mouse chording on a trackpad. I don&amp;rsquo;t know if his version of Acme didn&amp;rsquo;t have this or not, but I can &lt;code&gt;Cut&lt;/code&gt;, &lt;code&gt;Copy&lt;/code&gt;, and &lt;code&gt;Paste&lt;/code&gt; with the typical keyboard commands we Mac users have all come to love.&lt;/p&gt;
+
+&lt;p&gt;That leaves one mouse chord that isn&amp;rsquo;t possible, the 2-1 chord. This is the chord that executes whatever you have middle clicked and sends whatever you last highlighted as the argument. I currently have found only one typical need of this in my day to day and that&amp;rsquo;s &lt;code&gt;git commit -m &amp;quot;message&amp;quot;&lt;/code&gt; where &lt;code&gt;&amp;quot;message&amp;quot;&lt;/code&gt; needs to be an argument in order to work, &lt;em&gt;for me at least&lt;/em&gt;. So if I&amp;rsquo;m on my laptop and writing code, &lt;em&gt;which is seldom nowadays&lt;/em&gt;, I swap to a terminal for this one command and go about my work. I also made sure to buy an awesome bluetooth mouse so this situation rarely shows up for me.&lt;/p&gt;
+
+&lt;p&gt;Now Brian is definitely right about Acme using the Plan 9 versions of all the command line tools. If you tell Acme to execute &lt;code&gt;ls&lt;/code&gt;, it&amp;rsquo;s using Plan 9&amp;rsquo;s &lt;code&gt;ls&lt;/code&gt;, but type something like &lt;code&gt;which vim&lt;/code&gt; and you&amp;rsquo;ll see the one originally on your mac. This is easy to see by having Acme run something like &lt;code&gt;which ls&lt;/code&gt; and seeing the path direct you to the directory where Plan 9 from Userspace is installed.&lt;/p&gt;
+
+&lt;p&gt;This &lt;strong&gt;is&lt;/strong&gt; concerning for us peeps who don&amp;rsquo;t know Plan 9 tools. I&amp;rsquo;m assuming there has to be a way to point Acme to the tools we&amp;rsquo;re more familiar with, but I haven&amp;rsquo;t found it yet. Honestly, it hasn&amp;rsquo;t bothered me enough. If I really need to exercise some shell-foo, I open up a Mac terminal and take full advantage of what Fish gives me there. But this is a concern and you have been warned.&lt;/p&gt;
+
+&lt;h2 id=&#34;one-mouse-to-rule-them-all&#34;&gt;One Mouse to Rule Them ALL&lt;/h2&gt;
+
+&lt;p&gt;You&amp;rsquo;ve gotten this far and would still like to continue using Acme as your editor of choice, huh? Well, it&amp;rsquo;s time to get a three button mouse. I used an old Sun Microsystems mouse for a while, but I couldn&amp;rsquo;t function in a modern OS without a scroll wheel.&lt;/p&gt;
+
+&lt;p&gt;A lot of Acme users seem to use an &lt;a href=&#34;https://evoluent.com&#34;&gt;Evoluent Mouse&lt;/a&gt;, but I decided to try the Logitech MX Master mouse. While it doesn&amp;rsquo;t actually have three buttons, the magnificent scroll wheel is huge and flat so I can click it with ease. I also set the scroll to &amp;ldquo;ratchet mode&amp;rdquo; and turn off smooth scrolling so that the scroll wheel doesn&amp;rsquo;t scroll the window without quite a distinct motion.&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;Look, I know it sounds weird, but the other selling points for this mouse were too good. It can remember three different connections, has a horizontal scroll wheel, and a thumb button for moving between Mac workspaces. So I&amp;rsquo;ve learned some middle clicking foo. &lt;strong&gt;They do say the best relationships take effort.&lt;/strong&gt;&lt;/em&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;carry-on-my-wayward-son&#34;&gt;Carry On My Wayward Son&lt;/h2&gt;
+
+&lt;p&gt;There it is. My current knowledge on getting started with Acme. I still intend on making at least a couple more posts, as I need to talk a lot more about some of the intermediate features of Acme and outstanding issues I have. But you should now have a great start until then. &lt;a href=&#34;https://www.youtube.com/watch?v=2X_2IdybTV0&#34;&gt;So carry on.&lt;/a&gt;&lt;/p&gt;
+</description>
     </item>
     
     <item>
-      <title>first impressions of acme</title>
+      <title>First Impressions Of Acme</title>
       <link>http://blog.mattrbianchi.com/post/first-impressions-of-acme/</link>
-      <pubDate>Mon, 26 Sep 2016 15:33:33 -0400</pubDate>
+      <pubDate>Mon, 26 Sep 2016 15:33:33 +0000</pubDate>
       
       <guid>http://blog.mattrbianchi.com/post/first-impressions-of-acme/</guid>
-      <description>I suppose that after learning Go and falling in love with the community around it, it was inevitable that I would find Acme, Rob Pike&amp;rsquo;s and Russ Cox&amp;rsquo;s editor of choice, and shamelessly install it like the crazy fan boy I am. And I&amp;rsquo;m sure glad I did!
-Join Me for a Nice Brew My first pleasant discovery was how easy it was to install this gem. If you&amp;rsquo;re on a Mac, it&amp;rsquo;s as easy as brew install plan9port, which actually provides you with all the tools from Plan 9, or so I&amp;rsquo;ve heard.</description>
+      <description>
+
+&lt;p&gt;I suppose that after learning Go and falling in love with the community around it, it was inevitable that I would find Acme, Rob Pike&amp;rsquo;s and Russ Cox&amp;rsquo;s editor of choice, and shamelessly install it like the crazy fan boy I am. And I&amp;rsquo;m sure glad I did!&lt;/p&gt;
+
+&lt;h3 id=&#34;join-me-for-a-nice-brew&#34;&gt;Join Me for a Nice Brew&lt;/h3&gt;
+
+&lt;p&gt;My first pleasant discovery was how easy it was to install this gem. If you&amp;rsquo;re on a Mac, it&amp;rsquo;s as easy as &lt;code&gt;brew install plan9port&lt;/code&gt;, which actually provides you with all the tools from Plan 9, &lt;em&gt;or so I&amp;rsquo;ve heard&lt;/em&gt;. Since a lot of these tools keep the same name as their Unix cousins, they are &amp;ldquo;name-spaced&amp;rdquo; under the &lt;code&gt;9&lt;/code&gt; command to avoid colliding with your native binaries. Therefore, opening Acme is as simple as &lt;code&gt;9 acme&lt;/code&gt;. Then you might see my first &amp;ldquo;furrowed brow moment&amp;rdquo; with the editor: sometimes Acme will load as a blank screen. But I quickly figured out that it fixes itself after resizing the window &lt;em&gt;and this editor is best used at full screen&lt;/em&gt;, so no actual UX heart burn there. Also, if you watch the Plan 9 intro video I link at the bottom, you might come to the same conclusion I have: resizing the window has a lot to do with when Acme loads.&lt;/p&gt;
+
+&lt;p&gt;Ok, so now I have Acme installed and running on my Mac. What&amp;rsquo;s next? Well I initially learned a few moves and concepts for Acme from Russ Cox&amp;rsquo;s intro video, which I also have linked below. Remarkably, the intro video covers &lt;strong&gt;a lot&lt;/strong&gt; about how you interact with Acme in about twenty minutes and it&amp;rsquo;s all very easy to remember. So my second &amp;ldquo;wow&amp;rdquo; moment was how well I could move around and work in Acme compared to the first spartan editor I&amp;rsquo;ve attempted to learn, &lt;em&gt;with some success&lt;/em&gt;, Vim. Acme is &lt;strong&gt;much&lt;/strong&gt; easier to learn than Vim.&lt;/p&gt;
+
+&lt;h3 id=&#34;the-mouse-in-the-stone-or-uhh-box&#34;&gt;The Mouse in the Stone (or uhh&amp;hellip; Box)&lt;/h3&gt;
+
+&lt;p&gt;After watching Russ Cox&amp;rsquo;s video on Acme, I knew about the suggestion to use a three button mouse. If your scroll wheel clicks (&lt;em&gt;most of them do&lt;/em&gt;) this can serve as your middle button if you want to give this editor a test drive. But when I try something, I dive right in and that meant finding a three button mouse somehow, some way, at work. Luckily, we have one of those boxes at work. Yeah. You know what I&amp;rsquo;m talking about. &lt;strong&gt;That&lt;/strong&gt; box. The one that holds the peripherals your boss&amp;rsquo;s boss probably used to sling code before you were but a twinkle in your parents&amp;rsquo; eyes. In that box, I found a working (&lt;em&gt;important&lt;/em&gt;), clean (&lt;em&gt;super important&lt;/em&gt;) Sun Microsystems three button mouse. It was soul crushing grey, still used a track ball, but somehow had the most satisfying click I&amp;rsquo;ve ever experienced. It was simple, it was old, yet oddly pleasant. It matched Acme perfectly.&lt;/p&gt;
+
+&lt;h3 id=&#34;indentation-and-fonts-and-scrolling-oh-my&#34;&gt;Indentation, and Fonts, and Scrolling, Oh My!&lt;/h3&gt;
+
+&lt;p&gt;With my weapon of choice in hand, it was time to take what I had learned from Russ Cox and try to do some work. Unfortunately, this is where we get to a bumpy part in the road for this narrative. Currently, I am on a web project that is mostly HTML and JavaScript. I do not advise trying to edit HTML as your first task in Acme. You see, Acme has no syntax highlighting. It uses a proportional font &lt;strong&gt;by default&lt;/strong&gt;. The &lt;code&gt;TAB&lt;/code&gt; key will insert a literal &lt;code&gt;TAB&lt;/code&gt; character worth the width of 4 zeros in this proportional font which means if someone used spaces for indentation your &lt;code&gt;TAB&lt;/code&gt;s won&amp;rsquo;t line up. &lt;em&gt;The up and down arrow keys scroll the window for God&amp;rsquo;s sake&lt;/em&gt;. I know the programmers who started with Python just heard the word &lt;code&gt;TAB&lt;/code&gt; and are recovering from their minor faint, but I have more to say so please get some air and prop up your feet.&lt;/p&gt;
+
+&lt;p&gt;Trying to edit that darn HTML file was the most annoying point so far in my journey to learn Acme. I knew I needed to learn more about &lt;strong&gt;how&lt;/strong&gt; to use Acme to get around these pain points, so I went to the internet. First, I found out about the &lt;code&gt;-a&lt;/code&gt; flag, which tells Acme to copy the whitespace from the previous line to the next line. This means it will copy any spaces, too, which I didn&amp;rsquo;t realize at the time. &lt;em&gt;Let&amp;rsquo;s just say much profanity was used&lt;/em&gt;. But then, I found a blog post series by someone who recorded their trial of Acme and two discussions on the 9fans mailing list that helped me both grok and use Acme. Like the other resources, they are linked below.&lt;/p&gt;
+
+&lt;h3 id=&#34;the-knights-who-say-no&#34;&gt;The Knights Who Say&amp;hellip; No!&lt;/h3&gt;
+
+&lt;p&gt;In the first mailing list discussion, Russ Cox answers a list of questions about how to do a lot of the things other editors can do, in Acme. The answer was mostly &amp;ldquo;just say no&amp;rdquo;. I find it amusing that, just like in our actual practice of writing software, we should say no to some of the ideas imposed upon us on how to literally type out our software. In his brief answers, Russ Cox carries a lot of un-emphasized proverbs for interacting with text, so much so that I will have to write about it in a second post.&lt;/p&gt;
+
+&lt;h3 id=&#34;wax-on&#34;&gt;Wax On&amp;hellip;&lt;/h3&gt;
+
+&lt;p&gt;The second discussion was an amazing share of &lt;code&gt;Edit&lt;/code&gt; &amp;ldquo;scriptlets&amp;rdquo;. &lt;code&gt;Edit&lt;/code&gt; is an Acme command that takes a form of regular expression, &lt;em&gt;very similar to Vim&amp;rsquo;s :% command&lt;/em&gt;, to describe what to substitute for something else in a file. While I had already used &lt;code&gt;Edit&lt;/code&gt; a little bit, these scripts allowed me to really broaden my &amp;ldquo;&lt;code&gt;Edit&lt;/code&gt; foo&amp;rdquo; and do some desperately needed things like replacing 4 spaces with a &lt;code&gt;TAB&lt;/code&gt; and moving selected text in or out one &lt;code&gt;TAB&lt;/code&gt;. While Vim or Emacs users are probably laughing right now that a regular expression is needed to indent a block of code, I appreciate the simplicity and the application easily scales to powerful transformations.&lt;/p&gt;
+
+&lt;h3 id=&#34;as-close-as-a-muggle-can-get&#34;&gt;As Close as a Muggle Can Get&lt;/h3&gt;
+
+&lt;p&gt;Finally, the blog post series gave me some practical tips, like how Acme can &lt;code&gt;Dump&lt;/code&gt; its current set up into a file to be &lt;code&gt;Load&lt;/code&gt;ed later. This feature is absolutely amazing. At the end of the day, I can just &lt;code&gt;Dump&lt;/code&gt; my window set up, &lt;code&gt;Load&lt;/code&gt; it in the morning, and hit the ground running again. No more morning window dragging for me.&lt;/p&gt;
+
+&lt;p&gt;Another nifty tip is keeping a scratch file. This is a file you write to disk with all the relevant shell commands you normally execute day to day and when working on a specific project. That way, the text is right there for you to tell Acme to run. Oh yeah, did I fail to mention that part? Every bit of text in Acme can be sent to your shell as a command to be executed. Then any output from that command gets &lt;code&gt;echo&lt;/code&gt;ed back to an Acme window. Then &lt;strong&gt;that&lt;/strong&gt; text gives you more possible shell commands. It&amp;rsquo;s a very productive feedback loop and a great experience I believe Emacs users can sympathize with. If you don&amp;rsquo;t completely understand what I mean, just know I feel like Harry Potter and my mouse is fresh out of Ollivander&amp;rsquo;s. I&amp;rsquo;ll leave the explaining to Russ Cox&amp;rsquo;s intro video, considering he has ten or more years of experience and I&amp;rsquo;m still over here waving my mouse around like an idiot, trying to learn &amp;ldquo;Alohomora&amp;rdquo;.&lt;/p&gt;
+
+&lt;h3 id=&#34;the-neverending-story&#34;&gt;The Neverending Story&amp;hellip;&lt;/h3&gt;
+
+&lt;p&gt;To summarize, some of the reasons why I wanted to try Acme and why I&amp;rsquo;m sticking with Acme: I can come into work in the morning, &lt;code&gt;Load&lt;/code&gt; my project file, and I&amp;rsquo;m instantly thrown back into the context I lost overnight. Having the window locations open back up in the same locations they were before really helps me ramp up faster on where I left off. Then, without swapping to a terminal, I can send some commands from Acme to start up my web server or my test suite and start coding. It&amp;rsquo;s really a tiling window manager meets task manager instead of a text editor, but with zero need for configuration. That&amp;rsquo;s probably the best feature, the fact that I didn&amp;rsquo;t need to spend any time configuring Acme to be impressively productive.&lt;/p&gt;
+
+&lt;p&gt;And I haven&amp;rsquo;t even touched on how extensible this truly unique editor is. Maybe in another post.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://www.youtube.com/watch?v=dP1xVpMPn8M&#34;&gt;A Tour of the Acme Editor&lt;/a&gt;&lt;br /&gt;
+&lt;a href=&#34;http://echosa.github.io/blog/2014/06/18/lets-try-acme-ep-0-research/&#34;&gt;Lets Try Acme&lt;/a&gt;&lt;br /&gt;
+&lt;a href=&#34;https://groups.google.com/d/msg/comp.os.plan9/7KGswJEWd7c/QxulBRqrwgoJ&#34;&gt;Acme Edit scriptlets&lt;/a&gt;&lt;br /&gt;
+&lt;a href=&#34;https://groups.google.com/d/msg/comp.os.plan9/_YUEVbTFuME/tJHB8y8-0vYJ&#34;&gt;Using the Acme Editor&lt;/a&gt;&lt;br /&gt;
+&lt;a href=&#34;https://www.youtube.com/watch?v=fGnpNlhv6po&#34;&gt;Plan 9 - Thursday Night Tech Talks&lt;/a&gt;&lt;/p&gt;
+</description>
     </item>
     
   </channel>

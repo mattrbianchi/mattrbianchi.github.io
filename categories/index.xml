@@ -6,9 +6,8 @@
     <description>Recent content in Categories on mattrbianchi</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    
-	<atom:link href="http://blog.mattrbianchi.com/categories/index.xml" rel="self" type="application/rss+xml" />
-    
+    <copyright>&amp;copy; 2017 Matthew Bianchi</copyright>
+    <atom:link href="/categories/" rel="self" type="application/rss+xml" />
     
   </channel>
 </rss>
