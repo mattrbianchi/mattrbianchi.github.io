@@ -41,6 +41,16 @@
     
     <url>
     
+      <loc>http://blog.mattrbianchi.com/</loc>
+      <lastmod>2017-03-20T22:13:31-04:00</lastmod>
+      <priority>0</priority>
+    </url>
+    
+  
+    
+    
+    <url>
+    
       <loc>http://blog.mattrbianchi.com/categories/</loc>
       <priority>0</priority>
     </url>
@@ -61,16 +71,6 @@
     <url>
     
       <loc>http://blog.mattrbianchi.com/tags/</loc>
-      <priority>0</priority>
-    </url>
-    
-  
-    
-    
-    <url>
-    
-      <loc>http://blog.mattrbianchi.com/</loc>
-      <lastmod>2017-03-20T22:13:31-04:00</lastmod>
       <priority>0</priority>
     </url>
     
