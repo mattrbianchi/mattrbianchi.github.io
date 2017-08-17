@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Resources on </title>
+    <link>http://blog.mattrbianchi.com/resources/</link>
+    <description>Recent content in Resources on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>&amp;copy; 2017 Matthew Bianchi</copyright>
+    <atom:link href="/resources/" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Resources</title>
+      <link>http://blog.mattrbianchi.com/resources/toc/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://blog.mattrbianchi.com/resources/toc/</guid>
+      <description>
+
+&lt;h2 id=&#34;developer-advice&#34;&gt;Developer Advice&lt;/h2&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://www.informit.com/articles/article.aspx?p=1941206&#34;&gt;Best Programming Advice I Ever Got&lt;/a&gt;&lt;br /&gt;
+&lt;a href=&#34;https://www.perforce.com/resources/seven-pillars-pretty-code&#34;&gt;Seven Pillars of Pretty Code&lt;/a&gt;&lt;br /&gt;
+&lt;a href=&#34;http://www.ru.j-npcs.org/usoft/WWW/LJ/Articles/unixtenets.html&#34;&gt;Tenants of the Unix Philosophy&lt;/a&gt;&lt;br /&gt;
+&lt;a href=&#34;http://wozniak.ca/what-orms-have-taught-me-just-learn-sql&#34;&gt;What ORMs have taught me: just learn SQL&lt;/a&gt;&lt;br /&gt;
+&lt;a href=&#34;http://videlalvaro.github.io/2015/02/programming-myths.html&#34;&gt;HARMFUL GOTOS, PREMATURE OPTIMIZATIONS, AND PROGRAMMING MYTHS ARE THE ROOT OF ALL EVIL&lt;/a&gt;&lt;br /&gt;
+&lt;a href=&#34;http://www.kalzumeus.com/2011/10/28/dont-call-yourself-a-programmer/&#34;&gt;Don&amp;rsquo;t Call Yourself A Programmer, And Other Advice&lt;/a&gt;&lt;br /&gt;
+&lt;a href=&#34;https://blog.codinghorror.com/the-ultimate-code-kata/&#34;&gt;The Ultimate Code Kata&lt;/a&gt;&lt;br /&gt;
+&lt;a href=&#34;https://sites.google.com/site/steveyegge2/practicing-programming&#34;&gt;Practicing Programming&lt;/a&gt;&lt;br /&gt;
+&lt;a href=&#34;http://blog.cleancoder.com/uncle-bob/2016/09/01/TheLurn.html&#34;&gt;The Lurn&lt;/a&gt;&lt;br /&gt;
+&lt;a href=&#34;https://www.youtube.com/playlist?list=PL3NQHgGj2vtuWPOxUMGwvRuEB0KVg-UXT&#34;&gt;My playlist of favorite developer talks on YouTube&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;go-programming&#34;&gt;Go Programming&lt;/h2&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://dave.cheney.net/resources-for-new-go-programmers&#34;&gt;Resources for a Beginner Gopher&lt;/a&gt;&lt;br /&gt;
+&lt;a href=&#34;http://dave.cheney.net/2014/12/01/five-suggestions-for-setting-up-a-go-project&#34;&gt;5 suggestions for setting up a Go project&lt;/a&gt;&lt;br /&gt;
+&lt;a href=&#34;https://medium.com/@benbjohnson/standard-package-layout-7cdbc8391fc1#.9mtcrgzgt&#34;&gt;Standard Package Layout&lt;/a&gt;&lt;br /&gt;
+&lt;a href=&#34;https://medium.com/@benbjohnson/structuring-tests-in-go-46ddee7a25c#.pv5rg2lsy&#34;&gt;Structuring Tests in Go&lt;/a&gt;&lt;br /&gt;
+&lt;a href=&#34;https://dave.cheney.net/2013/06/09/writing-table-driven-tests-in-go&#34;&gt;Writing Table Driven Tests in Go&lt;/a&gt;&lt;br /&gt;
+&lt;a href=&#34;https://www.youtube.com/playlist?list=PL3NQHgGj2vtuiYBULcaZOcndxts4lJ9yb&#34;&gt;My playlist of favorite Go talks on YouTube&lt;/a&gt;&lt;br /&gt;
+&lt;a href=&#34;https://golangnews.com&#34;&gt;Go News&lt;/a&gt;&lt;br /&gt;
+&lt;a href=&#34;https://gophervids.appspot.com/#&#34;&gt;GopherVids&lt;/a&gt;&lt;br /&gt;
+&lt;a href=&#34;https://talks.golang.org/&#34;&gt;GoTalks&lt;/a&gt;&lt;br /&gt;
+&lt;a href=&#34;https://www.goinggo.net/&#34;&gt;Going Go Programming&lt;/a&gt;&lt;br /&gt;
+&lt;a href=&#34;https://vimeo.com/115940590&#34;&gt;Web Apps in Go&lt;/a&gt;&lt;br /&gt;
+&lt;a href=&#34;http://www.thedotpost.com/2016/10/katrina-owen-the-scandalous-story-of-the-dreadful-code-written-by-the-best-of-us&#34;&gt;The Scandalous Story of the Dreadful Code Written by the Best of Us&lt;/a&gt;&lt;br /&gt;
+&lt;a href=&#34;https://medium.com/@matryer/5-simple-tips-and-tricks-for-writing-unit-tests-in-golang-619653f90742#.k3mvrky9f&#34;&gt;Tips for testing Go&lt;/a&gt;&lt;br /&gt;
+&lt;a href=&#34;https://github.com/matryer/present/blob/master/quality-tests-in-go/Quality%20Tests%20in%20Go%20-%20Mat%20Ryer%20-%20GothamGo%202016.pdf&#34;&gt;Quality Tests in Go&lt;/a&gt;&lt;br /&gt;
+&lt;a href=&#34;https://nathanleclaire.com/blog/2015/10/10/interfaces-and-composition-for-effective-unit-testing-in-golang/&#34;&gt;Interfaces for Unit Testing Go&lt;/a&gt;&lt;br /&gt;
+&lt;a href=&#34;http://whipperstacker.com/2015/09/30/go-documentation-godoc-godoc-godoc-org-and-go-doc/&#34;&gt;Go Documentation&lt;/a&gt;&lt;br /&gt;
+&lt;a href=&#34;https://goreportcard.com&#34;&gt;A report card for Go projects&lt;/a&gt;&lt;br /&gt;
+&lt;a href=&#34;http://whipperstacker.com/2015/10/05/3-trivial-concurrency-exercises-for-the-confused-newbie-gopher/&#34;&gt;Concurrency for Newbs&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;git&#34;&gt;Git&lt;/h2&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://zeroturnaround.com/rebellabs/git-commands-and-best-practices-cheat-sheet/&#34;&gt;Git Cheat Sheet&lt;/a&gt;&lt;br /&gt;
+&lt;a href=&#34;https://stories.devacademy.la/how-to-use-github-pke-a-proper-human-being-1a9c895c4e13#.tbzxnb9p&#34;&gt;How to use GitHub&lt;/a&gt;&lt;br /&gt;
+&lt;a href=&#34;https://presentate.com/bobthecow/talks/changing-history&#34;&gt;Changing History&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;shell&#34;&gt;Shell&lt;/h2&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://conqueringthecommandpne.com/book&#34;&gt;Conquering the Command Line&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;markdown&#34;&gt;Markdown&lt;/h2&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://commonmark.org/help/&#34;&gt;Markdown Reference&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;staying-healthy&#34;&gt;Staying Healthy&lt;/h2&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://pfehacker.com/5755870/how-to-ergonomically-optimize-your-workspace&#34;&gt;How to Ergonomically Optimize Your Workspace&lt;/a&gt;&lt;br /&gt;
+&lt;a href=&#34;http://www.healthpne.com/health/chronic-pain/wrist-and-hand-stretches&#34;&gt;Wrist and Hand Stretches&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;places-to-learn&#34;&gt;Places to learn&lt;/h2&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://handmadehero.org/&#34;&gt;Handmade Hero&lt;/a&gt;&lt;br /&gt;
+&lt;a href=&#34;http://regexone.com/&#34;&gt;Regex One&lt;/a&gt;&lt;br /&gt;
+&lt;a href=&#34;https://contained.af/&#34;&gt;Game for learning syscalls&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;podcasts&#34;&gt;Podcasts&lt;/h2&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://changelog.com/gotime/&#34;&gt;Go Time&lt;/a&gt;&lt;br /&gt;
+&lt;a href=&#34;https://changelog.com/rfc/&#34;&gt;Request For Commits&lt;/a&gt;&lt;br /&gt;
+&lt;a href=&#34;http://softwareengineeringdaily.com/category/podcast/&#34;&gt;Software Engineering Daily&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;great-tech-talks&#34;&gt;Great Tech Talks&lt;/h2&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://www.infoq.com/presentations/Go-Google&#34;&gt;Go at Google&lt;/a&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

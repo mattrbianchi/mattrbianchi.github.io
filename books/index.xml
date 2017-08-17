@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Books on </title>
+    <link>http://blog.mattrbianchi.com/books/</link>
+    <description>Recent content in Books on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>&amp;copy; 2017 Matthew Bianchi</copyright>
+    <atom:link href="/books/" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>100 Ways to Improve Your Writing</title>
+      <link>http://blog.mattrbianchi.com/books/100-ways-writing/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://blog.mattrbianchi.com/books/100-ways-writing/</guid>
+      <description>&lt;p&gt;I&amp;rsquo;m terrible at writing. I have a lot to make up for and the faster the better. This book is great for giving small nuggets of advice that you can immediately use in your writing. The author, Gary Provost, does a brilliant job of making it a pleasure to read the book. Most of the time, he crafts his own writing to be examples of the very thing he is teaching at that very moment. It is a masterpiece that you can read front to back or just dive in to a section that you really need help in. As an added bonus, the book is printed in that specific paper that gives you that perfect book smell.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://amzn.to/2qsGlO9&#34;&gt;Grab it for yourself&lt;/a&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Go In Action</title>
+      <link>http://blog.mattrbianchi.com/books/go-in-action/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://blog.mattrbianchi.com/books/go-in-action/</guid>
+      <description>&lt;p&gt;After taking the Tour of Go, I bought Go in Action and haven&amp;rsquo;t regretted it. It&amp;rsquo;s great for someone who already knows how to program, but wants to get up to speed on the details and inner workings of Go. The authors, William Kennedy, Brian Ketelsen, and Erik St. Martin, did a great job of giving examples I could expand into a practical applications while keeping them concise (&lt;em&gt;which keep the book light, in both reading and weight&lt;/em&gt;). This is definitely a must read for anyone who wants to move beyond the syntax of Go and ramp up on its idioms.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://amzn.to/2qRLXT6&#34;&gt;Grab it for yourself&lt;/a&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Just for Fun</title>
+      <link>http://blog.mattrbianchi.com/books/just-for-fun/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://blog.mattrbianchi.com/books/just-for-fun/</guid>
+      <description>&lt;p&gt;Just For Fun was a biography about Linus Torvalds&amp;rsquo; life up until about 2002. I believe it is important for programmers to understand how humankind has gotten to this point in technology and to understand the mindset behind the people who pushed it. Just like how we must study all history in order to strive to do better on behalf of our predecessors, programmers should get a solid course in how the fantastic machine they carry around in their pockets came to be. I am constantly disappointed by the lack of knowledge programmers my age (and older) have of the giants they so quickly stand on the shoulders of. This book was a wonderfully fascinating view into the life of a man who singlehandedly shaped our field through simply filling a need of his—not once—but twice. It was inspiring to hear his story of how he made Linux with the knowledge he learned from Andrew Tanenbaum&amp;rsquo;s Operating Systems Design and Implementation and the manuals for his computer&amp;rsquo;s architecture. It really showed that it is as simple as sucking it up and &lt;code&gt;rfm&lt;/code&gt;!&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://amzn.to/2qsP03b&#34;&gt;Grab it for yourself&lt;/a&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Table of Contents</title>
+      <link>http://blog.mattrbianchi.com/books/toc/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://blog.mattrbianchi.com/books/toc/</guid>
+      <description>
+
+&lt;h2 id=&#34;for-all-professionals&#34;&gt;For All Professionals&lt;/h2&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://blog.mattrbianchi.com/books/&#34;&gt;Managing Oneself&lt;/a&gt; - &lt;em&gt;To Review&lt;/em&gt;&lt;br /&gt;
+&lt;a href=&#34;http://blog.mattrbianchi.com/books/&#34;&gt;Make it stick&lt;/a&gt; - &lt;em&gt;Currently Reading&lt;/em&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;for-all-developers&#34;&gt;For All Developers&lt;/h2&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://blog.mattrbianchi.com/books/the-prag-prog&#34;&gt;The Pragmatic Programmer&lt;/a&gt;&lt;br /&gt;
+&lt;a href=&#34;http://amzn.to/2qRUYeT&#34;&gt;Algorithms + Data Structures = Programs&lt;/a&gt; - &lt;em&gt;Currently Reading&lt;/em&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;learning-about-the-software-community&#34;&gt;Learning About the Software Community&lt;/h2&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://blog.mattrbianchi.com/books/just-for-fun&#34;&gt;Just for Fun&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;go-programming&#34;&gt;Go Programming&lt;/h2&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://blog.mattrbianchi.com/books/go-in-action&#34;&gt;Go In Action&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;writing&#34;&gt;Writing&lt;/h2&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://blog.mattrbianchi.com/books/100-ways-writing&#34;&gt;100 Ways to Improve Your Writing&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;cooking&#34;&gt;Cooking&lt;/h2&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://amzn.to/2qRQ95k&#34;&gt;The Food Lab&lt;/a&gt; - &lt;em&gt;Currently Reading&lt;/em&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;health&#34;&gt;Health&lt;/h2&gt;
+
+&lt;hr /&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>The Pragmatic Programmer</title>
+      <link>http://blog.mattrbianchi.com/books/the-prag-prog/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://blog.mattrbianchi.com/books/the-prag-prog/</guid>
+      <description>&lt;p&gt;This book has left a lasting impression and was a great starting place to continue my learning after college. Instead of teaching an algorithm or some abstract theory, the authors give you their advice composed from years of experience as established professionals in our field. This was a priceless insight into things like working with a team, handling a real world project, and how to choose the best tools and libraries that will make your life easier. I also &lt;em&gt;love&lt;/em&gt; how this book was written in a handbook-like format where you can dive back into any topic and have all of its context contained to that chapter. This way, after thoroughly enjoying it from cover to cover, I can come back for a refresher when I catch myself thinking &amp;ldquo;What would David Thomas and Andrew Hunt do?&amp;rdquo;.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://amzn.to/2qRXORf&#34;&gt;Grab it for yourself&lt;/a&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>
