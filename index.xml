@@ -364,10 +364,9 @@ I did need to install the recommended &lt;code&gt;xorg-dev&lt;/code&gt; package 
 &lt;hr /&gt;
 
 &lt;p&gt;&lt;a href=&#34;http://www.informit.com/articles/article.aspx?p=1941206&#34;&gt;Best Programming Advice I Ever Got&lt;/a&gt;&lt;br /&gt;
-&lt;a href=&#34;https://www.perforce.com/resources/seven-pillars-pretty-code&#34;&gt;Seven Pillars of Pretty Code&lt;/a&gt;&lt;br /&gt;
+&lt;a href=&#34;http://www.drdobbs.com/pillars-of-pretty-code/184415253&#34;&gt;Seven Pillars of Pretty Code&lt;/a&gt;&lt;br /&gt;
 &lt;a href=&#34;http://www.ru.j-npcs.org/usoft/WWW/LJ/Articles/unixtenets.html&#34;&gt;Tenants of the Unix Philosophy&lt;/a&gt;&lt;br /&gt;
 &lt;a href=&#34;http://wozniak.ca/what-orms-have-taught-me-just-learn-sql&#34;&gt;What ORMs have taught me: just learn SQL&lt;/a&gt;&lt;br /&gt;
-&lt;a href=&#34;http://videlalvaro.github.io/2015/02/programming-myths.html&#34;&gt;HARMFUL GOTOS, PREMATURE OPTIMIZATIONS, AND PROGRAMMING MYTHS ARE THE ROOT OF ALL EVIL&lt;/a&gt;&lt;br /&gt;
 &lt;a href=&#34;http://www.kalzumeus.com/2011/10/28/dont-call-yourself-a-programmer/&#34;&gt;Don&amp;rsquo;t Call Yourself A Programmer, And Other Advice&lt;/a&gt;&lt;br /&gt;
 &lt;a href=&#34;https://blog.codinghorror.com/the-ultimate-code-kata/&#34;&gt;The Ultimate Code Kata&lt;/a&gt;&lt;br /&gt;
 &lt;a href=&#34;https://sites.google.com/site/steveyegge2/practicing-programming&#34;&gt;Practicing Programming&lt;/a&gt;&lt;br /&gt;
@@ -392,7 +391,6 @@ I did need to install the recommended &lt;code&gt;xorg-dev&lt;/code&gt; package 
 &lt;a href=&#34;http://www.thedotpost.com/2016/10/katrina-owen-the-scandalous-story-of-the-dreadful-code-written-by-the-best-of-us&#34;&gt;The Scandalous Story of the Dreadful Code Written by the Best of Us&lt;/a&gt;&lt;br /&gt;
 &lt;a href=&#34;https://medium.com/@matryer/5-simple-tips-and-tricks-for-writing-unit-tests-in-golang-619653f90742#.k3mvrky9f&#34;&gt;Tips for testing Go&lt;/a&gt;&lt;br /&gt;
 &lt;a href=&#34;https://github.com/matryer/present/blob/master/quality-tests-in-go/Quality%20Tests%20in%20Go%20-%20Mat%20Ryer%20-%20GothamGo%202016.pdf&#34;&gt;Quality Tests in Go&lt;/a&gt;&lt;br /&gt;
-&lt;a href=&#34;https://nathanleclaire.com/blog/2015/10/10/interfaces-and-composition-for-effective-unit-testing-in-golang/&#34;&gt;Interfaces for Unit Testing Go&lt;/a&gt;&lt;br /&gt;
 &lt;a href=&#34;http://whipperstacker.com/2015/09/30/go-documentation-godoc-godoc-godoc-org-and-go-doc/&#34;&gt;Go Documentation&lt;/a&gt;&lt;br /&gt;
 &lt;a href=&#34;https://goreportcard.com&#34;&gt;A report card for Go projects&lt;/a&gt;&lt;br /&gt;
 &lt;a href=&#34;http://whipperstacker.com/2015/10/05/3-trivial-concurrency-exercises-for-the-confused-newbie-gopher/&#34;&gt;Concurrency for Newbs&lt;/a&gt;&lt;/p&gt;
@@ -444,7 +442,8 @@ I did need to install the recommended &lt;code&gt;xorg-dev&lt;/code&gt; package 
 
 &lt;hr /&gt;
 
-&lt;p&gt;&lt;a href=&#34;https://www.infoq.com/presentations/Go-Google&#34;&gt;Go at Google&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.infoq.com/presentations/Go-Google&#34;&gt;Go at Google&lt;/a&gt;&lt;br /&gt;
+&lt;a href=&#34;https://www.youtube.com/channel/UCpQr9n4nyAnSng-ep1zW94Q/playlists?flow=grid&amp;amp;view=1&amp;amp;sort=da&#34;&gt;All My Playlists on YouTube&lt;/a&gt;&lt;/p&gt;
 </description>
     </item>
     
